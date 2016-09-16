@@ -23,7 +23,7 @@ app.use(convert(json()));
 app.use(convert(logger()));
 
 config.resource.forEach(function(item){
-    app.use(require('koa-static')(path.join(__root, item)));
+    app.use(convert(require('koa-static')(path.join(__root, item))));
 })
 
 // logger

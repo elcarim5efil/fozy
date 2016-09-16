@@ -1,6 +1,6 @@
 {
   "name": "fozy",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -11,6 +11,13 @@
   },
   "author": "elcarim5efil",
   "license": "MIT",
+  "keywords": [
+    "front-end develop",
+    "koa2",
+    "live-reload",
+    "fozy"
+  ],
+  "repository": "https://github.com/elcarim5efil/fozy",
   "dependencies": {
     "babel-core": "^6.14.0",
     "babel-polyfill": "^6.13.0",

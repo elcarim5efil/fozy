@@ -6,13 +6,13 @@ require('babel-polyfill');
 
 const app = require('./app');
 const path = require('path');
-const browserSync = require('browser-sync').create();
 const config = require(path.join(fozy.__root, 'config')),
     __root = fozy.__root;
 
 var listener,
     MAX_RETRY = config.max_retry || 10,
-    port = config.port || 3000;
+    port = config.port || 3000,
+    watch = false;
 
 process.on('uncaughtException', function(err){
     if(err.code === 'EADDRINUSE'){
@@ -36,14 +36,24 @@ files = files.concat(config.resource.map(function(item){
 
 function doListen(){
     listener = app.listen(port, function(){
-        console.log('Server is listening to port %d', listener.address().port);
-        browserSync.init({
-            proxy: 'http://localhost:' + config.port,
-            port: config.port + 1,
-            files: files,
-            notify: false,
-        })
+        console.log('Koa server is listening to port %d', listener.address().port);
+        if(watch) {
+            const browserSync = require('browser-sync').create();
+            browserSync.init({
+                proxy: 'http://localhost:' + config.port,
+                port: config.port + 1,
+                files: files,
+                notify: false,
+            });
+        }
     });
 };
 
-doListen();
+var entry = {
+    run: function(options){
+        watch = options.watch;
+        doListen();
+    }
+}
+
+module.exports = entry;

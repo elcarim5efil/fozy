@@ -19,18 +19,18 @@ At project root directory, and run:
 
 ```js
 var config = {
-    mock: {                 // mock api data
+  mock: {                // mock api data
         api: './mock/api',
-    },
-    template: {             // template
-        path: './templates',    // template file
-        mock: './mock/ftl',     // template mock data
-    },
-    resource: [
-        './public'
-    ],
-    max_retry: 10,
-    port: 9000,
+  },     
+  template: {            // template
+    path: './templates',    // template file
+    mock: './mock/ftl',     // template mock data
+  },
+  resource: [
+    './public'
+  ],
+  max_retry: 10,
+  port: 9000,
 };
 module.exports = config;
 ```
