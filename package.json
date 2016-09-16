@@ -15,8 +15,8 @@
     "front-end develop",
     "koa2",
     "live-reload",
-    "browser-sync"
-    "fozy",
+    "browser-sync",
+    "fozy"
   ],
   "repository": "https://github.com/elcarim5efil/fozy",
   "dependencies": {
