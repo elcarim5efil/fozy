@@ -18,8 +18,9 @@ cli.on(['-v', '--version'], function(){
 
 cli.on(['-h', '--help'], function(){
     console.log(`
-        -v, --version: print version;
-        -h, --help: print help;`);
+        -v, --version, print version;
+        -h, --help, print help;
+        -w, --watch, start live-reload with browser-sync;`);
 });
 
 cli.on(['-w', '--watch'], function(){

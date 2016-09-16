@@ -19,12 +19,12 @@ At project root directory, and run:
 
 ```js
 var config = {
-  mock: {                // mock api data
-        api: './mock/api',
+  mock: { // mock api data
+    api: './mock/api',
   },     
-  template: {            // template
-    path: './templates',    // template file
-    mock: './mock/ftl',     // template mock data
+  template: { // template
+    path: './templates', // template file
+    mock: './mock/ftl',  // template mock data
   },
   resource: [
     './public'
@@ -33,4 +33,12 @@ var config = {
   port: 9000,
 };
 module.exports = config;
+```
+
+# cli
+
+```
+-v, --version, print version
+-h, --help, print help
+-w, --watch, start live-reload with browser-sync
 ```

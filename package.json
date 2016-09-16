@@ -1,6 +1,6 @@
 {
   "name": "fozy",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -15,7 +15,8 @@
     "front-end develop",
     "koa2",
     "live-reload",
-    "fozy"
+    "browser-sync"
+    "fozy",
   ],
   "repository": "https://github.com/elcarim5efil/fozy",
   "dependencies": {
@@ -30,10 +31,8 @@
     "freemarker.js": "^1.2.2",
     "koa": "^2.0.0",
     "koa-bodyparser": "^2.0.1",
-    "koa-browser-sync": "0.0.1",
     "koa-convert": "^1.2.0",
     "koa-json": "^1.1.1",
-    "koa-liveload": "0.0.2",
     "koa-logger": "^1.3.0",
     "koa-onerror": "^1.2.1",
     "koa-router": "^7.0.0",
