@@ -15,11 +15,12 @@ At project root directory, and run:
 
 # Configuration
 
-`config.js` sample:
+`fozy.config.js` sample:
 
 ```js
 var config = {
   mock: { // mock api data
+    proxy: 'http://proxy.com', // if not empty, use api proxy
     api: './mock/api',
   },     
   template: { // template
