@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+'use strict';
+
 const path = require('path');
 if(!!!global.fozy) {
     global.fozy = {
