@@ -15,7 +15,7 @@ const path = require('path');
 
 const mockServer = require('./lib/mock_server');
 const __root = fozy.__root;
-const config = require(path.join(__root, 'config'));
+const config = require(path.join(__root, 'fozy.config'));
 
 // middlewares
 app.use(convert(bodyparser));
@@ -31,7 +31,7 @@ app.use(async (ctx, next) => {
   const start = new Date();
   await next();
   const ms = new Date() - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+  console.log(`[KS] ${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
 router.use('/', mockServer.routes(), mockServer.allowedMethods());

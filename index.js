@@ -6,7 +6,7 @@ require('babel-polyfill');
 
 const app = require('./app');
 const path = require('path');
-const config = require(path.join(fozy.__root, 'config')),
+const config = require(path.join(fozy.__root, 'fozy.config')),
     __root = fozy.__root;
 
 var listener,
@@ -38,7 +38,7 @@ function doListen(){
     listener = app.listen(port, function(){
         console.log('Koa server is listening to port %d', listener.address().port);
         if(watch) {
-            const browserSync = require('browser-sync').create();
+            let browserSync = require('browser-sync').create();
             browserSync.init({
                 proxy: 'http://localhost:' + config.port,
                 port: config.port + 1,
