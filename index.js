@@ -16,32 +16,32 @@ var listener,
 process.on('uncaughtException', function(err){
     if(err.code === 'EADDRINUSE'){
         if(--MAX_RETRY>0) {
-            console.log('port %d is in used, trying port %d', port, ++port);
+            console.log('[KS] Port %d is in used, trying port %d', port, ++port);
             doListen();
         } else {
-            console.log('retry to much time(%d)', MAX_RETRY);
+            console.log('[KS] Retry to much time(%d)', MAX_RETRY);
         }
     } else {
-        console.log('undandle error', err);
+        console.log('[KS] Undandle error', err);
     }
 
 });
 
-var files = [];
-files.push(path.join(__root, config.template.root || ''));
-files = files.concat(config.resource.map(function(item){
+var files2Watch = [];
+files2Watch .push(path.join(__root, config.template.root || ''));
+files2Watch  = files2Watch .concat(config.watch.map(function(item){
     return path.join(__root, item);
 }));
 
 function doListen(){
     listener = app.listen(port, function(){
-        console.log('Koa server is listening to port %d', listener.address().port);
+        console.log('[KS] Koa server is listening to port %d', listener.address().port);
         if(watch) {
             let browserSync = require('browser-sync').create();
             browserSync.init({
                 proxy: 'http://localhost:' + config.port,
                 port: config.port + 1,
-                files: files,
+                files: files2Watch,
                 notify: false,
             });
         }

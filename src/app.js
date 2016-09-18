@@ -20,7 +20,9 @@ const config = require(path.join(__root, 'fozy.config'));
 // middlewares
 app.use(convert(bodyparser));
 app.use(convert(json()));
-app.use(convert(logger()));
+if(config.logMode) {
+    app.use(convert(logger()));
+}
 
 config.resource.forEach(function(item){
     app.use(convert(require('koa-static')(path.join(__root, item))));
@@ -40,7 +42,7 @@ app.use(router.routes(), router.allowedMethods());
 
 app.on('error', function(err, ctx){
   console.log(err)
-  logger.error('server error', err, ctx);
+  logger.error('[KS] Server error', err, ctx);
 });
 
 
