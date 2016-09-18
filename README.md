@@ -19,19 +19,25 @@ At project root directory, and run:
 
 ```js
 var config = {
+  port: 9000,
+  maxRetry: 10,
+  logMode: 0, // 0: simple mode, 1: complete mode
   mock: { // mock api data
     proxy: 'http://proxy.com', // if not empty, use api proxy
     api: './mock/api',
   },     
   template: { // template
-    path: './templates', // template file
+    root: './templates', // template file
+    page: '',    // page template files
     mock: './mock/ftl',  // template mock data
   },
   resource: [
-    './public'
+    './src'
   ],
-  max_retry: 10,
-  port: 9000,
+  watch: [  // live reload path, template files are automatically watched
+    './src/css',
+    './src/js',
+  ]
 };
 module.exports = config;
 ```
