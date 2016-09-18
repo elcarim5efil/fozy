@@ -19,10 +19,11 @@ cli.on(['-v', '--version'], function(){
 });
 
 cli.on(['-h', '--help'], function(){
-    console.log(`
-        -v, --version, print version;
-        -h, --help, print help;
-        -w, --watch, start live-reload with browser-sync;`);
+    console.log(
+`        -v, --version\t\tprint version
+        -h, --help\t\tprint help
+        -w, --watch\t\tstart live-reload with browser-sync
+        --init\t\t\tinitialize the project, so far, create fozy.config.js`);
 });
 
 cli.on(['-w', '--watch'], function(){
