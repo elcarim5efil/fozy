@@ -8,9 +8,9 @@ const router = require('koa-router')();
 const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
 
-const apiMock = require('./api_mock.js');
-const proxy = require('./proxy.js');
-const fm = require('./ftl_machine');
+const apiMock = require('./modules/api_mock.js');
+const proxy = require('./modules/proxy.js');
+const fm = require('./modules/ftl_machine');
 
 // ftl mock
 router.get('*', fm);

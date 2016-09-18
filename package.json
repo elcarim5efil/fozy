@@ -7,7 +7,8 @@
     "fozy": "bin/fozy.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "./node_modules/.bin/babel -d lib/ src/"
   },
   "author": "elcarim5efil",
   "license": "MIT",

@@ -13,7 +13,7 @@ const bodyparser = require('koa-bodyparser')();
 const logger = require('koa-logger');
 const path = require('path');
 
-const mockServer = require('./mock_server');
+const mockServer = require('./mock');
 const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
 

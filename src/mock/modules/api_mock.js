@@ -9,8 +9,9 @@ const config = require(path.join(__root, 'fozy.config'));
 
 let mock = async (ctx, next) => {
     let p = path.join(__root, config.mock.api, ctx.method.toLowerCase(), ctx.url, 'data.json')
+
+    // api mock data
     try {
-        // api mock data
         let data = await fs.readFileAsync(p);
         let json = JSON.parse(data);
         ctx.body = json;

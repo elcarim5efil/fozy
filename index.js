@@ -28,7 +28,7 @@ process.on('uncaughtException', function(err){
 });
 
 var files = [];
-files.push(path.join(__root, config.template.path));
+files.push(path.join(__root, config.template.root || ''));
 files = files.concat(config.resource.map(function(item){
     return path.join(__root, item);
 }));
