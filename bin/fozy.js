@@ -30,6 +30,11 @@ cli.on(['-w', '--watch'], function(){
     app.run({watch:true});
 });
 
+cli.on(['--init'], function(){
+    var init = require('../lib/init');
+    init.run();
+});
+
 cli.normal = function(){
     var app = require('../index');
     app.run({});
