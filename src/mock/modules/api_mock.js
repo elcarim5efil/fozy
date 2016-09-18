@@ -8,7 +8,8 @@ const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
 
 let mock = async (ctx, next) => {
-    let p = path.join(__root, config.mock.api, ctx.method.toLowerCase(), ctx.url, 'data.json')
+    let url = ctx.url.split('?')[0];
+    let p = path.join(__root, config.mock.api, ctx.method.toLowerCase(), url, 'data.json')
 
     // api mock data
     try {
