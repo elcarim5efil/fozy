@@ -55,4 +55,5 @@ module.exports = config;
 -v, --version, print version
 -h, --help, print help
 -w, --watch, start live-reload with browser-sync
+--init, initialize the project, so far, create fozy.config.js
 ```
