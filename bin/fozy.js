@@ -20,10 +20,15 @@ cli.on(['-v', '--version'], function(){
 
 cli.on(['-h', '--help'], function(){
     console.log(
-`        -v, --version\t\tprint version
-        -h, --help\t\tprint help
-        -w, --watch\t\tstart live-reload with browser-sync
-        --init\t\t\tinitialize the project, so far, create fozy.config.js`);
+`Usage: fozy [options]
+
+Options:
+  -v, --version\t\tprint version
+  -h, --help\t\tprint help
+  -w, --watch\t\tstart live-reload with browser-sync
+  --init\t\tinitialize the project, so far, create fozy.config.js
+
+Please visit Github repository https://github.com/elcarim5efil/fozy for more information.`);
 });
 
 cli.on(['-w', '--watch'], function(){
