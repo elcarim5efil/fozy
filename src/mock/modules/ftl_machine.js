@@ -10,7 +10,6 @@ const Freemarker = require('freemarker.js');
 const fm = Promise.promisifyAll(new Freemarker({
     viewRoot: path.join(__root, config.template.root || ''),
     options: {
-        // outputRoot: path.join(__root, config.template.path, 'TEMP'),
     }
 }));
 
@@ -24,7 +23,7 @@ let ftlMachine = async (ctx, next) => {
     try {
         data = await fs.readFileAsync(p);
     } catch (err) {
-        console.log(`[KS] Cannot find mock data for: ${p}`);
+        // console.log(`[KS] Cannot find mock data for: ${p}`);
         return next();
     }
 

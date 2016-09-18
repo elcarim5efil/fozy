@@ -13,9 +13,18 @@ const bodyparser = require('koa-bodyparser')();
 const logger = require('koa-logger');
 const path = require('path');
 
+const Promise = require('bluebird');
+const Freemarker = require('freemarker.js');
+const fs = Promise.promisifyAll(require('fs'));
+
 const mockServer = require('./mock');
 const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
+const fm = Promise.promisifyAll(new Freemarker({
+    viewRoot: path.join(__dirname, '../templates'),
+    options: {
+    }
+}));
 
 // middlewares
 app.use(convert(bodyparser));
@@ -37,6 +46,24 @@ app.use(async (ctx, next) => {
 });
 
 router.use('/', mockServer.routes(), mockServer.allowedMethods());
+
+// pages index
+router.use('/', async (ctx, next) => {
+    let p = path.join(__root, config.template.root, config.template.page);
+    let files = await fs.readdirAsync(p);
+    let pages = files.map(function(item){
+        let parts = item.split('.');
+        parts.splice(parts.length - 1,1);
+        let name = parts.join('.');
+        return {name: name, url: '/'+name};
+    });
+
+    let html = await fm.renderAsync('index.ftl', {
+        title: 'Pages Index',
+        pages: pages,
+    });
+    ctx.body = html;
+});
 
 app.use(router.routes(), router.allowedMethods());
 
