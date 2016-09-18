@@ -1,10 +1,9 @@
 
 'use strict';
 
-require('babel-core/register');
-require('babel-polyfill');
+require('babel-polyfill')
 
-const app = require('./app');
+const app = require('./lib/app');
 const path = require('path');
 const config = require(path.join(fozy.__root, 'fozy.config')),
     __root = fozy.__root;
