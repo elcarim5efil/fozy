@@ -14,7 +14,14 @@ let init = {
     makeConf() {
         let confSrc = path.join(__dirname, '../../sample/fozy.config.js');
         let confTar = path.join(__root, 'fozy.config.js');
-        copyFile(confSrc, confTar);
+        fs.exists(confTar, function(data, err){
+            if(!!!err && !data) {
+                copyFile(confSrc, confTar);
+                console.log('[fozy] fozy.config.js created');
+            } else {
+                console.log('[fozy] fozy.config.js already exists');
+            }
+        });
     }
 }
 
