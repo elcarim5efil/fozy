@@ -13,18 +13,10 @@ const bodyparser = require('koa-bodyparser')();
 const logger = require('koa-logger');
 const path = require('path');
 
-const Promise = require('bluebird');
-const Freemarker = require('freemarker.js');
-const fs = Promise.promisifyAll(require('fs'));
-
 const mockServer = require('./mock');
+const indexPage = require('./index_page');
 const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
-const fm = Promise.promisifyAll(new Freemarker({
-    viewRoot: path.join(__dirname, '../templates'),
-    options: {
-    }
-}));
 
 // middlewares
 app.use(convert(bodyparser));
@@ -33,6 +25,7 @@ if(config.logMode) {
     app.use(convert(logger()));
 }
 
+// static files
 config.resource.forEach(function(item){
     app.use(convert(require('koa-static')(path.join(__root, item))));
 })
@@ -45,25 +38,11 @@ app.use(async (ctx, next) => {
   console.log(`[KS] ${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
+// route to mock server
 router.use('/', mockServer.routes(), mockServer.allowedMethods());
 
 // pages index
-router.use('/', async (ctx, next) => {
-    let p = path.join(__root, config.template.root, config.template.page);
-    let files = await fs.readdirAsync(p);
-    let pages = files.map(function(item){
-        let parts = item.split('.');
-        parts.splice(parts.length - 1,1);
-        let name = parts.join('.');
-        return {name: name, url: '/'+name};
-    });
-
-    let html = await fm.renderAsync('index.ftl', {
-        title: 'Pages Index',
-        pages: pages,
-    });
-    ctx.body = html;
-});
+router.get('/', indexPage);
 
 app.use(router.routes(), router.allowedMethods());
 
@@ -71,6 +50,5 @@ app.on('error', function(err, ctx){
   console.log(err)
   logger.error('[KS] Server error', err, ctx);
 });
-
 
 module.exports = app;

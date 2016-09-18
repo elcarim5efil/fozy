@@ -16,7 +16,7 @@ const fm = require('./modules/ftl_machine');
 router.get('*', fm);
 
 router.get('*', async (ctx, next) => {
-    let p = path.join(__root, 'views', ctx.url + '.html');
+    let p = path.join(__root, config.view || 'views', ctx.url + '.html');
     try {
         let data = await fs.readFileAsync(p);
         ctx.type = 'html'

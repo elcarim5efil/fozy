@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "./node_modules/.bin/babel -d lib/ src/"
+    "compile": "./node_modules/.bin/babel -d lib/ src/ --watch"
   },
   "author": "elcarim5efil",
   "license": "MIT",

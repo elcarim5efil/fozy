@@ -21,23 +21,30 @@ At project root directory, and run:
 var config = {
   port: 9000,
   maxRetry: 10,
-  logMode: 0, // 0: simple mode, 1: complete mode
-  mock: { // mock api data
+  logMode: 0,  // 0: simple mode, 1: complete mode
+  view: './views',  // .html files
+  mock: {  // mock api data
     proxy: 'http://proxy.com', // if not empty, use api proxy
     api: './mock/api',
   },     
-  template: { // template
-    root: './templates', // template file
-    page: '',    // page template files
+  template: {  // template
+    engine: 'ftl',  // template engine
+    root: './templates',  // template file
+    page: '',  // page template files
     mock: './mock/ftl',  // template mock data
   },
-  resource: [
+  resource: [  // static files path
     './src'
   ],
   watch: [  // live reload path, template files are automatically watched
     './src/css',
     './src/js',
-  ]
+  ],
+  pages: [  // page configuration
+        {name: 'demo page 1', url: '/demo'},
+        {name: 'demo page 2', url: '/demo2'},
+        {name: 'demo page 3', url: '/demo3'},
+    ]
 };
 module.exports = config;
 ```
