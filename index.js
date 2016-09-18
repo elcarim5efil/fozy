@@ -9,7 +9,7 @@ const config = require(path.join(fozy.__root, 'fozy.config')),
     __root = fozy.__root;
 
 var listener,
-    MAX_RETRY = config.max_retry || 10,
+    MAX_RETRY = config.maxRetry || 10,
     port = config.port || 3000,
     watch = false;
 

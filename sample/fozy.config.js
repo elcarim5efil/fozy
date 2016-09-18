@@ -6,7 +6,6 @@ var config = {
         api: './mock/',
     },
     template: {
-        engine: 'ftl',
         root: './templates',
         page: 'pages',
         mock: './mock/ftl',
