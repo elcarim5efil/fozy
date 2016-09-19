@@ -22,7 +22,7 @@ var config = {
   port: 9000,
   maxRetry: 10,
   logMode: 0,  // 0: simple mode, 1: complete mode
-  autoOpen: false,
+  autoOpen: false,  // false: disable auto open browser when watching
   view: './views',  // .html files
   mock: {  // mock api data
     proxy: 'http://proxy.com', // if not empty, use api proxy
@@ -32,7 +32,7 @@ var config = {
     engine: 'ftl',  // template engine
     root: './templates',  // template file
     page: '',  // page template files
-    mock: './mock/ftl',  // template mock data
+    mock: './mock/ftl',  // template mock data, global mock data should be under this directory, etc: ./mock/ftl/global/data.json
   },
   resource: [  // static files path
     './src'
