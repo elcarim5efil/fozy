@@ -22,6 +22,7 @@ var config = {
   port: 9000,
   maxRetry: 10,
   logMode: 0,  // 0: simple mode, 1: complete mode
+  autoOpen: false,
   view: './views',  // .html files
   mock: {  // mock api data
     proxy: 'http://proxy.com', // if not empty, use api proxy

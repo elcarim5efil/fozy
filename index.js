@@ -43,6 +43,9 @@ function doListen(){
                 port: config.port + 1,
                 files: files2Watch,
                 notify: false,
+                ui: false,
+                online: false,
+                open: config.autoOpen,
             });
         }
     });
