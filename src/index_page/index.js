@@ -36,9 +36,11 @@ async function getPageList() {
     temp = await fs.readdirAsync(p)
     files = files.concat(temp);
     // views
-    p = path.join(__root, config.view);
-    temp = await fs.readdirAsync(p)
-    files = files.concat(temp);
+    if(config.view !== '') {
+        p = path.join(__root, config.view);
+        temp = await fs.readdirAsync(p)
+        files = files.concat(temp);
+    }
 
     let pages = files.map(function(item){
         let parts = item.split('.');
@@ -46,7 +48,7 @@ async function getPageList() {
         let name = parts.join('.');
         return {name: name, url: '/'+name};
     });
-
+    console.log(pages);
     return pages;
 }
 

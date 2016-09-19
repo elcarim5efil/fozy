@@ -17,27 +17,28 @@ const fm = Promise.promisifyAll(new Freemarker({
 const gp = path.join(__root, config.template.mock, 'global/data.json');
 
 let ftlMachine = async (ctx, next) => {
-    let p = path.join(__root, config.template.mock || '', ctx.url + '.json');
-
-    let tpl;
+    let tpl, pageFile;
     if(config.pages && config.pages.length > 0) {
         tpl = getPathByUrl(ctx.url);
+        // console.log(tpl);
+        pageFile = removePostfix(tpl);
         if(tpl === -1) {
             return next();
         }
     } else {
         tpl = ctx.url+'.ftl';
     }
-    
+
     tpl = path.join(config.template.page || '', tpl);
 
     let data, gData, json, html;
+    let p = path.join(__root, config.template.mock || '', (pageFile || ctx.url) + '.json');
+    console.log(p);
     // page ftl mock data
     try {
         data = await fs.readFileAsync(p);
     } catch (err) {
         // console.log(`[KS] Cannot find mock data for: ${p}`);
-        return next();
     }
 
     // global ftl mock data
@@ -50,7 +51,7 @@ let ftlMachine = async (ctx, next) => {
     // make json
     json = JSON.parse(data);
     if(gData) {
-        json = Object.assign(json, JSON.parse(gData));
+        json = Object.assign(JSON.parse(gData), json);
     }
 
     // render template
@@ -63,6 +64,27 @@ let ftlMachine = async (ctx, next) => {
     }
 };
 
+/**
+ * [removePostfix description]
+ * @param  {[type]} path [description]
+ * @return {[type]}      [description]
+ */
+function removePostfix(path) {
+    if(typeof path !== 'string') {
+        return;
+    }
+    var pp = path.split('/');
+    pp = pp[pp.length-1];
+    var p = pp.split('.');
+    p.splice(p.length-1,1);
+    return p.join('.');
+}
+
+/**
+ * [getPathByUrl description]
+ * @param  {[type]} url [description]
+ * @return {[type]}     [description]
+ */
 function getPathByUrl(url) {
     var p = config.pages;
     for(let i=0, len=p.length; i<len; ++i) {
