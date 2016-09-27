@@ -18,9 +18,10 @@ const gp = path.join(__root, config.template.mock, 'global/data.json');
 
 let ftlMachine = async (ctx, next) => {
     let tpl, pageFile;
+
+    // get the template mock data file path according to the config.pages
     if(config.pages && config.pages.length > 0) {
         tpl = getPathByUrl(ctx.url);
-        // console.log(tpl);
         pageFile = removePostfix(tpl);
         if(tpl === -1) {
             return next();
@@ -33,7 +34,7 @@ let ftlMachine = async (ctx, next) => {
 
     let data, gData, json, html;
     let p = path.join(__root, config.template.mock || '', (pageFile || ctx.url) + '.json');
-    console.log(p);
+
     // page ftl mock data
     try {
         data = await fs.readFileAsync(p);
@@ -50,8 +51,25 @@ let ftlMachine = async (ctx, next) => {
 
     // make json
     json = JSON.parse(data);
+    // stringify property in json according to json.__json
+    if(json && json.__json && json.__json.length) {
+        json.__json.forEach(function(item, i){
+            if(json[item]) {
+                json[item] = JSON.stringify(json[item]);
+            }
+        })
+    }
+    
     if(gData) {
         json = Object.assign(JSON.parse(gData), json);
+        // stringify property in json according to json.__json
+        if(json && json.__json && json.__json.length) {
+            json.__json.forEach(function(item, i){
+                if(json[item]) {
+                    json[item] = JSON.stringify(json[item]);
+                }
+            })
+        }
     }
 
     // render template
@@ -64,26 +82,26 @@ let ftlMachine = async (ctx, next) => {
     }
 };
 
+
+
 /**
- * [removePostfix description]
- * @param  {[type]} path [description]
- * @return {[type]}      [description]
+ * remove postfix from the path, '/mock/demo.ftl' => '/mock/demo'
+ * @param  {string} path path string
+ * @return {string}      path without postfix
  */
 function removePostfix(path) {
     if(typeof path !== 'string') {
         return;
     }
-    var pp = path.split('/');
-    pp = pp[pp.length-1];
-    var p = pp.split('.');
+    var p = path.split('.');
     p.splice(p.length-1,1);
     return p.join('.');
 }
 
 /**
- * [getPathByUrl description]
- * @param  {[type]} url [description]
- * @return {[type]}     [description]
+ * get path by url in the config.pages
+ * @param  {string} url matching url
+ * @return {string/number}     path, -1: not found
  */
 function getPathByUrl(url) {
     var p = config.pages;
