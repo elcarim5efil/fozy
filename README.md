@@ -17,7 +17,7 @@ At project root directory, and run:
 
 `fozy.config.js` sample:
 
-```js
+```javascript
 var config = {
   port: 9000,
   maxRetry: 10,
@@ -49,6 +49,29 @@ var config = {
 };
 module.exports = config;
 ```
+
+# pre-stringify template data to json
+
+When you need to use json-string in template mock data in order to passing some data to javascript (just like what we usually do when passing data from freemarker to javascript)
+
+```ftl
+<script>
+    var data = ${data!"{}"};
+</script>
+```
+
+So, what you need to do here is that, when you wanna passing some mock data to javascript, you can define an `__json` array in your mock data file, like this:
+
+```json
+{
+    "__json": [
+        "data"
+    ],
+    "data": {"a":1,"b":2}
+}
+```
+
+In this way, the server will stringify the specific mock data defined in `__json` before rendering the template files, so that you don't have to managing JSON-string in you mock data in a very lousy way.
 
 # cli
 
