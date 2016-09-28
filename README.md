@@ -50,7 +50,31 @@ var config = {
 module.exports = config;
 ```
 
-# pre-stringify template data to json
+# api mock data
+
+You can assign a data generator to a specific api url, which means you can make your own dynamic mock data during development. What you have to to is place a .js file aside your json file.
+
+```
+/mock/api/post/test/data.json
+/mock/api/post/test/data.js
+```
+
+In `data.js`, you should define a function and export it. Using `body` and `query` makes it possible to respond the specific request data.
+
+```javascript
+module.exports = function(json, body, query){
+    // do something with json and finally return it
+    // body is the pre-parsed body data
+    // query is the query string in the url
+    // just like:
+    json.data = Math.random() + body.x + query.y;
+    return json;
+}
+```
+
+So far, the post content-type are limited to `application/json`, `application/x-www-form-urlencoded`.
+
+# pre-stringify template mock data
 
 When you need to use json-string in template mock data in order to passing some data to javascript (just like what we usually do when passing data from freemarker to javascript)
 
