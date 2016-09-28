@@ -39,11 +39,7 @@ function doListen(){
         if(watch) {
             let browserSync = require('browser-sync').create();
             browserSync.init({
-<<<<<<< HEAD
-                proxy: 'http://localhost:' + port,
-=======
                 proxy: 'http://localhost:' + listener.address().port,
->>>>>>> dev
                 port: config.port + 1,
                 files: files2Watch,
                 notify: false,
