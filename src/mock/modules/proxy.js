@@ -1,7 +1,8 @@
 
 'use strict';
 
-const request = require('./koa_request');
+// const request = require('./koa_request');
+const _request = require('request');
 
 let proxy = opt => {
     return async (ctx, next) => {
@@ -10,14 +11,24 @@ let proxy = opt => {
             headers: ctx.header,
             body: getParsedBody(ctx),
         };
-        let res = await (request[ctx.method.toLowerCase()+'Async'])(options);
-        ctx.status = res.statusCode;
-        ctx.body = res.body;
-        for (var name in res.headers) {
-            if (name === 'transfer-encoding') {
-                continue;
-            }
-            ctx.set(name, res.headers[name]);
+
+        // try{
+        //     let res = await (request[ctx.method.toLowerCase()+'Async'])(options);
+        //     ctx.status = res.statusCode;
+        //     ctx.body = res.body;
+        //     for (var name in res.headers) {
+        //         if (name === 'transfer-encoding') {
+        //             continue;
+        //         }
+        //         ctx.set(name, res.headers[name]);
+        //     }
+        // }catch(err){
+        //     console.log('[KS] API proxy error', err);
+        // }
+        try{
+            ctx.body = _request(opt.url + ctx.url);
+        }catch(err){
+
         }
     }
 };
