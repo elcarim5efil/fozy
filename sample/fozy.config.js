@@ -5,7 +5,8 @@ var config = {
     view: './views',
     mock: {
         api: './mock/api/',
-        proxy: 'http://localhost:9000',
+        // proxy: 'http://localhost:9000',
+        // proxy: 'http://www.baidu.com',
     },
     template: {
         engine: 'ftl',

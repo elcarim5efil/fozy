@@ -17,6 +17,7 @@ const mockServer = require('./mock');
 const indexPage = require('./index_page');
 const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
+const $proxy = require('koa-http-proxy');
 
 // middlewares
 app.use(convert(bodyparser));
@@ -32,19 +33,22 @@ config.resource.forEach(function(item){
 
 // logger
 app.use(async (ctx, next) => {
+  console.log('incoming', ctx);
   const start = new Date();
   await next();
   const ms = new Date() - start;
   console.log(`[KS] ${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
+app.use($proxy('http://www.baidu.com'));
+
 // route to mock server
-router.use('/', mockServer.routes(), mockServer.allowedMethods());
+// router.use('/', mockServer.routes(), mockServer.allowedMethods());
 
 // pages index
-router.get('/', indexPage);
+// router.get('/', indexPage);
 
-app.use(router.routes(), router.allowedMethods());
+// app.use(router.routes(), router.allowedMethods());
 
 app.on('error', function(err, ctx){
   console.log(err)

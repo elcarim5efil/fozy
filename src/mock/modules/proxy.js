@@ -2,7 +2,11 @@
 'use strict';
 
 // const request = require('./koa_request');
+const __root = fozy.__root;
+const path = require('path');
+const config = require(path.join(__root, 'fozy.config'));
 const _request = require('request');
+// const $proxy = require('http-proxy').createProxyServer({target: config.mock.proxy});
 
 let proxy = opt => {
     return async (ctx, next) => {
@@ -11,7 +15,7 @@ let proxy = opt => {
             headers: ctx.header,
             body: getParsedBody(ctx),
         };
-
+        // console.log(ctx);
         // try{
         //     let res = await (request[ctx.method.toLowerCase()+'Async'])(options);
         //     ctx.status = res.statusCode;
@@ -26,9 +30,19 @@ let proxy = opt => {
         //     console.log('[KS] API proxy error', err);
         // }
         try{
-            ctx.body = _request(opt.url + ctx.url);
+            // ctx.body = _request(opt.url + ctx.url);
+            // debugger;
+            var d = ctx.res;
+            $proxy.web(ctx.req, ctx.res, function(){
+                console.log(arguments);
+            });
+            $proxy.on('error', function(e){
+                console.log(e);
+            })
+            console.log(ctx.res);
+            console.log(d === ctx.res);
         }catch(err){
-
+            console.log(err);
         }
     }
 };
