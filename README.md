@@ -1,3 +1,7 @@
+[![NPM version][npm-image]][npm-url]
+[![download][downloads-image]][downloads-url]
+
+[![NPM][nodei-image]][nodei-url]
 
 # Introduction
 
