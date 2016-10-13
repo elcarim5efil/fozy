@@ -28,9 +28,9 @@ router.get('*', async (ctx, next) => {
 
 if(config.mock.proxy) {
     console.log(`[KS] using proxy api: ${config.mock.proxy}`);
-    // router.all('*', proxy({
-    //     url: config.mock.proxy
-    // }));
+    router.all('*', proxy({
+        url: config.mock.proxy
+    }));
 } else {
     console.log('[KS] using local api');
     router.all('*', apiMock);
