@@ -1,7 +1,17 @@
+# fozy 
 [![NPM version][npm-image]][npm-url]
 [![download][downloads-image]][downloads-url]
 
 [![NPM][nodei-image]][nodei-url]
+
+
+[npm-url]: https://www.npmjs.com/package/fozy
+[npm-image]: https://img.shields.io/npm/v/fozy.svg
+[downloads-image]: https://img.shields.io/npm/dm/fozy.svg
+[downloads-url]: https://www.npmjs.com/package/fozy
+[nodei-image]: https://nodei.co/npm/fozy.png?downloads=true&downloadRank=true&stars=true
+[nodei-url]: https://www.npmjs.com/package/fozy
+
 
 # Introduction
 
