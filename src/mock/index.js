@@ -9,7 +9,6 @@ const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
 
 const apiMock = require('./modules/api_mock.js');
-const proxy = require('./modules/proxy.js');
 const fm = require('./modules/ftl_machine');
 
 // ftl mock
@@ -26,14 +25,6 @@ router.get('*', async (ctx, next) => {
     }
 });
 
-if(config.mock.proxy) {
-    console.log(`[KS] using proxy api: ${config.mock.proxy}`);
-    router.all('*', proxy({
-        url: config.mock.proxy
-    }));
-} else {
-    console.log('[KS] using local api');
-    router.all('*', apiMock);
-}
+router.all('*', apiMock);
 
 module.exports = router;

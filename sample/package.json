@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "koa2-http-proxy": "^0.0.3"
+  }
+}

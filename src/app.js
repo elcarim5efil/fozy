@@ -17,7 +17,6 @@ const mockServer = require('./mock');
 const indexPage = require('./index_page');
 const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
-const $proxy = require('koa-http-proxy');
 
 // middlewares
 if(!config.mock.proxy) {

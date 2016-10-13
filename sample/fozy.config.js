@@ -5,7 +5,7 @@ var config = {
     view: './views',
     mock: {
         api: './mock/api/',
-        proxy: 'http://localhost:9000',
+        // proxy: 'http://localhost:9000',
     },
     template: {
         engine: 'ftl',
