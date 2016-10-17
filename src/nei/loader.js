@@ -7,6 +7,7 @@ let specType = 0;
 
 let loader = async (key, cb) => {
     let url = `${neiHost}/api/projectres/?key=${encodeURIComponent(key)}&spectype=${specType}`;
+    
     try{
         let json = await req({
             url

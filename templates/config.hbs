@@ -2,23 +2,24 @@ var config = {
     port: 9000,
     maxRetry: 10,
     logMode: 0,
-    view: './views',
+    view: '{{{staticViews}}}',
     mock: {
-        api: './mock/api/',
+        api: '{{{apiMock}}}',
         proxy: null,
     },
     template: {
         engine: 'ftl',
-        root: './templates',
-        page: 'pages',
-        mock: './mock/ftl',
+        root: '{{{templatesRoot}}}',
+        mock: '{{{templatesMock}}}',
     },
     resource: [
-        './src'
+        '{{{webRoot}}}'
     ],
     watch: [
-        './src/css',
-        './src/js',
+        '{{{webRoot}}}/src/css',
+        '{{{webRoot}}}/src/stykesheet',
+        '{{{webRoot}}}/src/js',
+        '{{{webRoot}}}/src/javascript',
     ],
     pages: [
         {{#each pages}}
