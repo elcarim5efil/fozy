@@ -66,10 +66,11 @@ let tplEngine = (option) => {
         }
 
         // stringify property in json according to json.__json
+        console.log(json.__json.forEach);
         if(json && json.__json && json.__json.length) {
-            json.__json.foreach(function(item, i){
+            json.__json.forEach(function(item, i){
                 if(json[item]) {
-                    json[item] = json.stringify(json[item]);
+                    json[item] = JSON.stringify(json[item]);
                 }
             })
         }
