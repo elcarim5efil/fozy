@@ -1,7 +1,7 @@
 
 'use strict';
 
-require('babel-polyfill')
+require('babel-polyfill');
 
 const app = require('./lib/app');
 const path = require('path');

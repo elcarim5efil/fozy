@@ -13,8 +13,8 @@ if(config.mock.proxy){
 } else {
     console.log('[KS] using local api');
     const Promise = require('bluebird');
-    const qs = require('querystring');
     const fs = Promise.promisifyAll(require('fs'));
+    const qs = require('querystring');
     const requireNew = require('../requireNew.js');
     mock = async (ctx, next) => {
         let url = ctx.url.split('?')[0];

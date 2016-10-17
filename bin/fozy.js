@@ -14,11 +14,11 @@ const Cli = require('../lib/cli');
 
 let cli = new Cli();
 
-cli.on(['-v', '--version'], function(){
+cli.on(['-v', '--version'], () => {
     console.log(`v${pack.version}`);
 });
 
-cli.on(['-h', '--help'], function(){
+cli.on(['-h', '--help'], () => {
     console.log(
 `Usage: fozy [options]
 
@@ -39,6 +39,11 @@ cli.on(['-w', '--watch'], function(){
 cli.on(['--init'], function(){
     var init = require('../lib/init');
     init.run();
+});
+
+cli.on(['--nei'], function(arg){
+    let nei = require('../lib/nei');
+    nei.build(arg);
 });
 
 cli.normal = function(){
