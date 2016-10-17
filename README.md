@@ -1,4 +1,4 @@
-# fozy 
+# fozy
 [![NPM version][npm-image]][npm-url]
 [![download][downloads-image]][downloads-url]
 
@@ -37,7 +37,7 @@ var config = {
   maxRetry: 10,
   logMode: 0,  // 0: simple mode, 1: complete mode
   autoOpen: false,  // false: disable auto open browser when watching
-  view: './views',  // .html files
+  htmlView: './views',  // .html files
   mock: {  // mock api data
     proxy: 'http://proxy.com', // if not empty, use api proxy
     api: './mock/api',

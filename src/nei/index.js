@@ -16,9 +16,8 @@ module.exports = {
         console.log('Loading NEI configuration...');
         let data = await loader(key);
 
-        console.log('NEI configuration loaded, building fozy.config.js...');
-
         // output fozy.config.js
+        console.log('NEI configuration loaded, building fozy.config.js...');
         await output.makeConfig(config.format(data));
         console.log('fozy.config.js build success, path: ' +  path.join(__root, './fozy.config.js'));
     }

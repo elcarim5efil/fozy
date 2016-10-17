@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+</head>
+<body>
+    <ul>
+        {{#each pages}}
+            <li><a href="{{this.url}}">{{this.name}} - {{this.url}}</a></li>
+        {{/each}}
+    </ul>
+</body>
+</html>

@@ -8,13 +8,13 @@ const config = require(path.join(__root, 'fozy.config'));
 const router = require('koa-router')();
 
 const apiMock = require('./modules/api_mock.js');
-const fm = require('./modules/ftl_machine');
+const templateEngine = require('./modules/template_engine');
 
-// ftl mock
-router.get('*', fm);
+// template mock
+router.get('*', templateEngine({engine: 'ftl'}));
 
 router.get('*', async (ctx, next) => {
-    let p = path.join(__root, config.view || 'views', ctx.url + '.html');
+    let p = path.join(__root, config.htmlView || 'views', ctx.url + '.html');
     try {
         let data = await fs.readFileAsync(p);
         ctx.type = 'html'

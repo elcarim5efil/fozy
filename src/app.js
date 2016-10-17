@@ -14,13 +14,12 @@ const logger = require('koa-logger');
 const path = require('path');
 
 const mockServer = require('./mock');
-const indexPage = require('./index_page');
+const indexPage = require('./router/index_page');
 const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
 
 // middlewares
 if(!config.mock.proxy) {
-    console.log('no proxy');
     app.use(convert(bodyparser));
 }
 app.use(convert(json()));
@@ -35,7 +34,6 @@ config.resource.forEach(function(item){
 
 // logger
 app.use(async (ctx, next) => {
-  // console.log('incoming', ctx);
   const start = new Date();
   await next();
   const ms = new Date() - start;
