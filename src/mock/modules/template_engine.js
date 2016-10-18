@@ -53,7 +53,7 @@ let tplEngine = (option) => {
 
         let json;
         if(data) {
-            JSON.parse(data);
+            json = JSON.parse(data);
         }
 
         // stringify property in json according to json.__json
@@ -77,7 +77,6 @@ let tplEngine = (option) => {
                 }
             })
         }
-        console.log('here', json);
 
         // render template end return html
         try {
