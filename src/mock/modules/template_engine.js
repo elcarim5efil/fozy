@@ -66,14 +66,14 @@ let tplEngine = (option) => {
         }
 
         // stringify property in json according to json.__json
-        console.log(json.__json.forEach);
         if(json && json.__json && json.__json.length) {
             json.__json.forEach(function(item, i){
-                if(json[item]) {
+                if(typeof json[item] === 'object') {
                     json[item] = JSON.stringify(json[item]);
                 }
             })
         }
+        // console.log(json);
 
         // render template end return html
         try {
