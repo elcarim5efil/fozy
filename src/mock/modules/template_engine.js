@@ -51,7 +51,11 @@ let tplEngine = (option) => {
             gData = await fs.readFileAsync(gp);
         } catch (err) {}
 
-        let json = JSON.parse(data);
+        let json;
+        if(data) {
+            JSON.parse(data);
+        }
+
         // stringify property in json according to json.__json
         if(json && json.__json && json.__json.length) {
             json.__json.forEach(function(item, i){
@@ -60,11 +64,11 @@ let tplEngine = (option) => {
                 }
             })
         }
+
         // combine with global data
         if(gData) {
             json = Object.assign(JSON.parse(gData), json);
         }
-
         // stringify property in json according to json.__json
         if(json && json.__json && json.__json.length) {
             json.__json.forEach(function(item, i){
@@ -73,14 +77,14 @@ let tplEngine = (option) => {
                 }
             })
         }
-        // console.log(json);
+        console.log('here', json);
 
         // render template end return html
         try {
             let html = await engine.render(tpl, json || {});
             ctx.body = html;
         } catch(err) {
-            console.error('[KS] render error');
+            // console.error('[KS] render error');
             return next();
         }
     };
