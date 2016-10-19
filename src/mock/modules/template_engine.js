@@ -56,19 +56,11 @@ let tplEngine = (option) => {
             json = JSON.parse(data);
         }
 
-        // stringify property in json according to json.__json
-        if(json && json.__json && json.__json.length) {
-            json.__json.forEach(function(item, i){
-                if(json[item]) {
-                    json[item] = JSON.stringify(json[item]);
-                }
-            })
-        }
-
         // combine with global data
         if(gData) {
             json = Object.assign(JSON.parse(gData), json);
         }
+
         // stringify property in json according to json.__json
         if(json && json.__json && json.__json.length) {
             json.__json.forEach(function(item, i){

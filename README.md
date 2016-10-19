@@ -56,9 +56,10 @@ var config = {
     './src/js',
   ],
   pages: [  // page configuration
-        {name: 'demo page 1', url: '/demo'},
-        {name: 'demo page 2', url: '/demo2'},
-        {name: 'demo page 3', url: '/demo3'},
+        {name: 'demo page 1', url: '/demo', path: './demo.ftl'},
+        {name: 'demo page 2', url: '/demo2', path: './demo2.html'},
+        {name: 'demo page 3', url: '/demo3', path: './demo3.ftl'},
+rl: '/demo3'},
     ]
 };
 module.exports = config;
