@@ -6,7 +6,7 @@
 
 ## 安装
 
-利用npm全局安装, 需要`node4.0`或以上.
+利用npm全局安装, 需要`node 4.2`或以上(未验证).
 
 `npm install fozy -g`
 
@@ -20,15 +20,15 @@
 
 ```javascript
 var config = {
-  port: 9000,
-  maxRetry: 10,
+  port: 9000,                   // 如果不启用live-reload功能, 那么则只会使用这个端口, 但如果要启用live-reload功能, 那么就多使用一个端口, 如:9001, 此时应该访问`localhost:9001`
+  maxRetry: 10,                 // 端口被占用后的重试次数, 端口被占用后会自动+1, 知道能够建立服务器为止
   logMode: 0,                   // 日志打印模式, 0: simple mode, 1: complete mode
   autoOpen: false,              // 启动后自动打开浏览器开关, 仅在watch模式下有效(fozy -w)
   htmlView: './views',          // 非模版html文件路径
 
   // 异步数据mock服务器配置
   mock: {                       
-    proxy: 'http://proxy.com',  // 异步数据代理, 可以启动java服务器, 并将异步请求转给java服务器从而获取异步数据, 此时模版渲染与静态文件仍然由fozy提供, 即仍然可以使用live-reload功能
+    proxy: 'http://proxy.com',  // 不设置或为false时无效, 异步数据代理, 可以启动java服务器, 并将异步请求转给java服务器从而获取异步数据, 此时模版渲染与静态文件仍然由fozy提供, 即仍然可以使用live-reload功能
     api: './mock/api',          // 本地mock数据根目录
   },     
 
@@ -121,3 +121,13 @@ module.exports = function(json, body, query){
 --init, initialize the project, so far, create fozy.config.js
 --nei {key}, fetch nei configuration from nei server and construct a fozy.config.js
 ```
+
+# 当前问题
+
+当前无论是系统结构还是功能上还很不完善:
+
+- live-reload是用了browser-sync模块, 要多占用一个端口, 需要考虑自己实现live-reload功能;
+- mcss编译器没有集成进去;
+- 报错提示需要完善, 否则当遇到页面无法加载时无法定位错误;
+- 没有自动打包功能;
+- ......

@@ -3,17 +3,18 @@
 
 const req= require('../../lib//promise/req.js');
 
-let neiHost = 'http://nei.netease.com';
+let neiHost = 'https://nei.netease.com';
 let specType = 0;
 
 let loader = async (key, cb) => {
     let url = `${neiHost}/api/projectres/?key=${encodeURIComponent(key)}&spectype=${specType}`;
-
+    console.log(url);
     try{
         let json = await req({
             url
         });
         let data = JSON.parse(json.toJSON().body);
+        console.log(data);
         if(data.code !== 200) {
             throw data
         } else {
