@@ -56,7 +56,6 @@ async function getPageList() {
         let name = parts.join('.');
         return {name: name, url: '/'+name};
     });
-    console.log(pages);
     return pages;
 }
 

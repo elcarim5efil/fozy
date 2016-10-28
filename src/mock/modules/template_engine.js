@@ -17,7 +17,9 @@ let tplEngine = (option) => {
     if(option.engine == 'ftl') {
         engine = require('../../engine/freemarker')({
             viewRoot: path.join(__root, config.template.root || ''),
-            options: {}
+            options: {
+                sourceEncoding: 'utf-8',
+            }
         });
         fileType = '.ftl'
     }
@@ -52,13 +54,21 @@ let tplEngine = (option) => {
         } catch (err) {}
 
         let json;
-        if(data) {
-            json = JSON.parse(data);
+        try{
+            if(data) {
+                json = JSON.parse(data);
+            }
+        } catch(err) {
+
         }
 
         // combine with global data
-        if(gData) {
-            json = Object.assign(JSON.parse(gData), json);
+        try{
+            if(gData) {
+                json = Object.assign(JSON.parse(gData), json);
+            }
+        } catch(err) {
+
         }
 
         // stringify property in json according to json.__json

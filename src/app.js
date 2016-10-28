@@ -43,7 +43,7 @@ app.use(async (ctx, next) => {
 router.use('/', mockServer.routes(), mockServer.allowedMethods());
 
 // pages index
-router.get('/', indexPage);
+router.get('/fozy/index', indexPage);
 
 app.use(router.routes(), router.allowedMethods());
 

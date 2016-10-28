@@ -28,8 +28,8 @@ process.on('uncaughtException', function(err){
 });
 
 var files2Watch = [];
-files2Watch .push(path.join(__root, config.template.root || ''));
-files2Watch  = files2Watch .concat(config.watch.map(function(item){
+files2Watch.push(path.join(__root, config.template.root || ''));
+files2Watch  = files2Watch.concat(config.watch.map(function(item){
     return path.join(__root, item);
 }));
 
