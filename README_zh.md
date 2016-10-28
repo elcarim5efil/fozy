@@ -94,7 +94,7 @@ module.exports = function(json, body, query){
 ```json
 {
     "__json": [
-        "data"
+        {"data": "dataJson"}
     ],
     "data": {"a":1,"b":2}
 }

@@ -40,7 +40,15 @@ var config = {
   htmlView: './views',  // .html files
   mock: {  // mock api data
     proxy: 'http://proxy.com', // if not empty, use api proxy
-    api: './mock/api',
+    api: {
+        root: './mock/api',   // api root
+        get: 'get',           // get method root, ./mock/api/get
+        post: 'fetch',        // post method root, ./mock/api/fetch
+    },
+    fileName: 'data',         // specific mock data file name, 'data.json'
+                              // or you can just assign it to false, then the file name will be deault according to the url
+                              // etc: url =>GET /test/getData, the mock data file name will be getData.json
+                              // and the whole path will be ./mock/api/get/test/getData.json
   },     
   template: {  // template
     engine: 'ftl',  // template engine
@@ -104,7 +112,7 @@ So, what you need to do here is that, when you wanna passing some mock data to j
 ```json
 {
     "__json": [
-        "data"
+        {"data": "dataJson"}
     ],
     "data": {"a":1,"b":2}
 }

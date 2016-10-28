@@ -2,10 +2,16 @@ var config = {
     port: 9000,
     maxRetry: 10,
     logMode: 0,
+    autoOpen: true,
     htmlView: './views',
     mock: {
-        api: './mock/api/',
+        api: {
+            root: './mock/api/',
+            get: 'get',
+            post: 'post',
+        }
         // proxy: 'http://localhost:9000',
+        fileName: 'data',
     },
     template: {
         engine: 'ftl',

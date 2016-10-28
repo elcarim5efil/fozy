@@ -5,8 +5,13 @@ var config = {
     view: '{{{staticViews}}}',
     autoOpen:true,
     mock: {
-        api: '{{{apiMock}}}',
+        api: {
+            root: '{{{apiMock}}}',
+            get: 'get',
+            post: 'post',
+        }
         proxy: null,
+        fileName: 'data',
     },
     template: {
         engine: 'ftl',

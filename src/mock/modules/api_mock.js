@@ -22,13 +22,25 @@ if(config.mock.proxy){
 
     mock = async (ctx, next) => {
         // url whithout tail
-        let url = ctx.url.split('?')[0];
+        let url = removePostfix(ctx.url.split('?')[0]);
 
-        // data.json path
-        let p = path.join(__root, config.mock.api, ctx.method.toLowerCase(), url, 'data.json');
+        let method = ctx.method.toLocaleLowerCase();
 
-        // data.js path, for processing data.json
-        let pjs = path.join(__root, config.mock.api, ctx.method.toLowerCase(), url, 'data.js');
+        let r = path.join(__root, config.mock.api.root, method && config.mock.api[method]);
+        let fileName = config.mock.fileName;
+
+        let p, pjs;
+        if(!fileName) {
+            // data.json path
+            p = path.join(r, url + '.json');
+            // data.js path, for processing data.json
+            pjs = path.join(r, url + '.js');
+        } else {
+            // data.json path
+            p = path.join(r, url, fileName + '.json');
+            // data.js path, for processing data.json
+            pjs = path.join(r, url, fileName + '.js');
+        }
 
         // get process function
         let process = undefined;
@@ -53,5 +65,20 @@ if(config.mock.proxy){
     };
 }
 
+/**
+ * remove postfix from the path, '/mock/demo.ftl' => '/mock/demo'
+ * @param  {string} path path string
+ * @return {string}      path without postfix
+ */
+function removePostfix(path) {
+    if(typeof path !== 'string') {
+        return;
+    }
+    var p = path.split('.');
+    if(p.length > 1) {
+        p.splice(p.length-1,1);
+    }
+    return p.join('.');
+}
 
 module.exports = mock;

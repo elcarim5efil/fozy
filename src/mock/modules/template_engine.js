@@ -18,7 +18,7 @@ let tplEngine = (option) => {
         engine = require('../../engine/freemarker')({
             viewRoot: path.join(__root, config.template.root || ''),
             options: {
-                sourceEncoding: 'utf-8',
+                // sourceEncoding: 'UTF-8',
             }
         });
         fileType = '.ftl'
@@ -44,13 +44,13 @@ let tplEngine = (option) => {
         // page template  mock data
         let data;
         try {
-            data = await fs.readFileAsync(p);
+            data = await fs.readFileAsync(p, 'utf-8');
         } catch (err) {}
 
         // global template mock data
         let gData;
         try{
-            gData = await fs.readFileAsync(gp);
+            gData = await fs.readFileAsync(gp, 'utf-8');
         } catch (err) {}
 
         let json;
@@ -74,8 +74,9 @@ let tplEngine = (option) => {
         // stringify property in json according to json.__json
         if(json && json.__json && json.__json.length) {
             json.__json.forEach(function(item, i){
-                if(typeof json[item] === 'object') {
-                    json[item] = JSON.stringify(json[item]);
+                let key = Object.keys(item)[0];
+                if(typeof json[key] === 'object') {
+                    json[item[key]] = JSON.stringify(json[key]);
                 }
             })
         }
