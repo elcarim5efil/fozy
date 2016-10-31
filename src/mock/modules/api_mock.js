@@ -42,6 +42,8 @@ if(config.mock.proxy){
             pjs = path.join(r, url, fileName + '.js');
         }
 
+        console.log(p, pjs);
+
         // get process function
         let process = undefined;
         try{
