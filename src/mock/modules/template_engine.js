@@ -28,7 +28,7 @@ let tplEngine = (option) => {
 
         // get the template mock data file path according to the config.pages
         if(config.pages && config.pages.length > 0) {
-            tpl = getPathByUrl(ctx.url);
+            tpl = getPathByUrl(removeQueryString(ctx.url));
             pageFile = removePostfix(tpl);
             if(tpl === -1) {
                 return next();
@@ -91,6 +91,20 @@ let tplEngine = (option) => {
         }
     };
 };
+
+
+
+/**
+ * remove postfix from the path, '/mock/demo.ftl' => '/mock/demo'
+ * @param  {string} path path string
+ * @return {string}      path without postfix
+ */
+function removeQueryString(path) {
+    if(typeof path !== 'string') {
+        return;
+    }
+    return path.split('?')[0];
+}
 
 /**
  * remove postfix from the path, '/mock/demo.ftl' => '/mock/demo'
