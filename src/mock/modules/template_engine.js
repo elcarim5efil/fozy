@@ -93,7 +93,7 @@ let tplEngine = (option) => {
 
         let body = ctx.request.body,
             query = qs.parse(ctx.url.split('?')[1]);
-        json = typeof process === 'function' ? process(json, body, query) : json;
+        json = typeof process === 'function' ? process(json, body, query, ctx) : json;
 
         // render template end return html
         try {
