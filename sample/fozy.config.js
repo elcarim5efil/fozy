@@ -9,7 +9,7 @@ var config = {
             root: './mock/api/',
             get: 'get',
             post: 'post',
-        }
+        },
         // proxy: 'http://localhost:9000',
         fileName: 'data',
     },

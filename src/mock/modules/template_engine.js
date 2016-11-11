@@ -7,6 +7,8 @@ const fs = require('../../promise/fs');
 const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
 
+const qs = require('querystring');
+const requireNew = require('../../util/require_from_new.js');
 
 const gp = path.join(__root, config.template.mock, 'global/data.json');
 
@@ -40,6 +42,7 @@ let tplEngine = (option) => {
         tpl = path.join(config.template.page || '', tpl);
 
         let p = path.join(__root, config.template.mock || '', (pageFile || ctx.url) + '.json');
+        let pjs = path.join(__root, config.template.mock || '', (pageFile || ctx.url) + '.js');
 
         // page template  mock data
         let data;
@@ -71,6 +74,13 @@ let tplEngine = (option) => {
 
         }
 
+        // get process function
+        let process = undefined;
+        try{
+            await fs.readFileAsync(pjs);
+            process = requireNew(pjs);
+        } catch(err) {}
+
         // stringify property in json according to json.__json
         if(json && json.__json && json.__json.length) {
             json.__json.forEach(function(item, i){
@@ -80,6 +90,10 @@ let tplEngine = (option) => {
                 }
             })
         }
+
+        let body = ctx.request.body,
+            query = qs.parse(ctx.url.split('?')[1]);
+        json = typeof process === 'function' ? process(json, body, query) : json;
 
         // render template end return html
         try {
