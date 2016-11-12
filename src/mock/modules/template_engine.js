@@ -3,14 +3,15 @@
 
 const path = require('path');
 const fs = require('../../promise/fs');
-
+const _ = require('../../util/extend');
 const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
 
 const qs = require('querystring');
 const requireNew = require('../../util/require_from_new.js');
+const JSONProcessor = require('./json.processor.js');
 
-const gp = path.join(__root, config.template.mock, 'global/data.json');
+const globalJsonPath = path.join(__root, config.template.mock, '__global/data.json');
 
 let engine;
 
@@ -26,112 +27,73 @@ let tplEngine = (option) => {
         fileType = '.ftl'
     }
     return async (ctx, next) => {
-        let tpl, pageFile;
+        let files = getFiles(ctx, fileType);
 
-        // get the template mock data file path according to the config.pages
-        if(config.pages && config.pages.length > 0) {
-            tpl = getPathByUrl(removeQueryString(ctx.url));
-            pageFile = removePostfix(tpl);
-            if(tpl === -1) {
-                return next();
-            }
-        } else {
-            tpl = ctx.url + fileType;
+        if(!files.isTplExist) {
+            return next();
         }
 
-        tpl = path.join(config.template.page || '', tpl);
-
-        let p = path.join(__root, config.template.mock || '', (pageFile || ctx.url) + '.json');
-        let pjs = path.join(__root, config.template.mock || '', (pageFile || ctx.url) + '.js');
-
-        // page template  mock data
-        let data;
+        // template mock data
+        let data, gData, json;
         try {
-            data = await fs.readFileAsync(p, 'utf-8');
-        } catch (err) {}
-
-        // global template mock data
-        let gData;
-        try{
-            gData = await fs.readFileAsync(gp, 'utf-8');
-        } catch (err) {}
-
-        let json;
-        try{
-            if(data) {
-                json = JSON.parse(data);
+            // page mock data
+            data = await fs.readFileAsync(files.json, 'utf-8');
+            // string -> json
+            json = JSON.parse(data);
+            // global template mock data
+            if(fs.existsSync(globalJsonPath)) {
+                gData = await fs.readFileAsync(globalJsonPath, 'utf-8');
             }
-        } catch(err) {
-
+            // combine with global data
+            json = Object.assign(JSON.parse(gData), json);
+        } catch (err) {
+            console.info('[KS] mock data parse error, there may be something wrong with your .json files');
         }
 
-        // combine with global data
-        try{
-            if(gData) {
-                json = Object.assign(JSON.parse(gData), json);
-            }
-        } catch(err) {
+        // process mock data with external js or stringify the specific object
+        let proc = new JSONProcessor({
+            module: files.js,
+            preStringify: true,
+        });
 
-        }
-
-        // get process function
-        let process = undefined;
-        try{
-            await fs.readFileAsync(pjs);
-            process = requireNew(pjs);
-        } catch(err) {}
-
-        // stringify property in json according to json.__json
-        if(json && json.__json && json.__json.length) {
-            json.__json.forEach(function(item, i){
-                let key = Object.keys(item)[0];
-                if(typeof json[key] === 'object') {
-                    json[item[key]] = JSON.stringify(json[key]);
-                }
-            })
-        }
-
-        let body = ctx.request.body,
-            query = qs.parse(ctx.url.split('?')[1]);
-        json = typeof process === 'function' ? process(json, body, query, ctx) : json;
+        json = proc.process(
+            json || {},
+            ctx.request.body,
+            qs.parse(ctx.url.split('?')[1]),
+            ctx,
+        );
 
         // render template end return html
         try {
-            let html = await engine.render(tpl, json || {});
+            let html = await engine.render(files.tpl, json || {});
             ctx.body = html;
         } catch(err) {
-            // console.error('[KS] render error');
-            return next();
+            console.error('[KS] render error, please check your template files and json files');
         }
     };
 };
 
+// get the template mock data file path according to the config.pages
+function getFiles(ctx, fileType) {
+    let files = {
+        isTplExist: false,
+    };
 
-
-/**
- * remove postfix from the path, '/mock/demo.ftl' => '/mock/demo'
- * @param  {string} path path string
- * @return {string}      path without postfix
- */
-function removeQueryString(path) {
-    if(typeof path !== 'string') {
-        return;
+    if(config.pages && config.pages.length > 0) {
+        files.tpl = getPathByUrl(_.removeQueryString(ctx.url));
+        files.path = _.removePostfix(files.tpl);
+        if(files.tpl === -1) {
+            return files;
+        }
+    } else {
+        files.tpl = ctx.url + fileType;
     }
-    return path.split('?')[0];
-}
 
-/**
- * remove postfix from the path, '/mock/demo.ftl' => '/mock/demo'
- * @param  {string} path path string
- * @return {string}      path without postfix
- */
-function removePostfix(path) {
-    if(typeof path !== 'string') {
-        return;
-    }
-    var p = path.split('.');
-    p.splice(p.length-1,1);
-    return p.join('.');
+    files.json = path.join(__root, config.template.mock || '', (files.path || ctx.url) + '.json');
+    files.js = path.join(__root, config.template.mock || '', (files.path || ctx.url) + '.js');
+    files.tpl = path.join(config.template.page || '', files.tpl);
+    files.isTplExist = fs.existsSync(path.join(__root, config.template.root || '', files.tpl));
+    return files;
 }
 
 /**
@@ -140,13 +102,14 @@ function removePostfix(path) {
  * @return {string/number}     path, -1: not found
  */
 function getPathByUrl(url) {
-    var p = config.pages;
-    for(let i=0, len=p.length; i<len; ++i) {
-        if(p[i].url === url) {
-            return p[i].path;
+    var res = -1;
+    _.which(config.pages, item => {
+        if(item.url === url) {
+            res = item.path;
+            return true;
         }
-    }
-    return -1;
+    });
+    return res;
 }
 
 module.exports = tplEngine ;

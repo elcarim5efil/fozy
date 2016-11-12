@@ -2,7 +2,7 @@ var config = {
     port: 9000,
     maxRetry: 10,
     logMode: 0,
-    autoOpen: true,
+    autoOpen: false,
     htmlView: './views',
     mock: {
         api: {
@@ -16,7 +16,6 @@ var config = {
     template: {
         engine: 'ftl',
         root: './templates',
-        page: 'pages',
         mock: './mock/ftl',
     },
     resource: [
@@ -27,9 +26,9 @@ var config = {
         './src/js',
     ],
     pages: [
-        {name: '示例1', url: '/demo', path: './demo.ftl'},
-        {name: '示例2', url: '/demo2', path: './demo2.ftl'},
-        {name: '示例3', url: '/demo3', path: './demo3.html'},
+        {name: '示例1', url: '/demo', path: './pages/demo.ftl'},
+        {name: '示例2', url: '/demo2', path: './pages/demo2.ftl'},
+        {name: '示例3', url: '/demo3', path: './pages/demo3.html'},
     ]
 
 };

@@ -1,0 +1,9 @@
+{
+    "name": "Homer",
+    "__json": [
+        {"test": "testJson"}
+    ],
+    "test": [
+        "1,2,3,4"
+    ]
+}

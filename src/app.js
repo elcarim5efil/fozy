@@ -39,14 +39,14 @@ app.use(async (ctx, next) => {
   console.log(`[KS] ${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
-// pages index
-router.get('/fozy/index', indexPage);
-
 // route to mock server
 router.use('/', mockServer.routes(), mockServer.allowedMethods());
 
-
 app.use(router.routes(), router.allowedMethods());
+
+// pages index
+router.get('/fozy/index', indexPage);
+router.get('*', indexPage);
 
 app.on('error', function(err, ctx){
   console.log(err)

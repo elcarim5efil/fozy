@@ -27,6 +27,12 @@ At project root directory, and run:
 
 `fozy`
 
+Input `http://localhost:9000/fozy/index` in your browser to view your page list
+
+Run `fozy -w` to enter watch mode.
+
+Will start the watch mode, which will need to use another port. When your configured port is `9000`, then `9001` will be used as the watch mode port, which means you should use `http://localhost:9001/fozy/index`.
+
 # Configuration
 
 `fozy.config.js` sample:
@@ -54,7 +60,7 @@ var config = {
     engine: 'ftl',  // template engine
     root: './templates',  // template file
     page: '',  // page template files
-    mock: './mock/ftl',  // template mock data, global mock data should be under this directory, etc: ./mock/ftl/global/data.json
+    mock: './mock/ftl',  // template mock data, global mock data should be under this directory, etc: ./mock/ftl/__global/data.json
   },
   resource: [  // static files path
     './src'
