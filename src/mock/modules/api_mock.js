@@ -11,7 +11,11 @@ if(config.mock.proxy){
     // using proxy api
     console.log(`[KS] using proxy api: ${config.mock.proxy}`);
     const $proxy = require('koa2-http-proxy');
-    mock = $proxy(config.mock.proxy);
+    mock = $proxy({
+        target: config.mock.proxy,
+        changeOrigin: true,
+        autoRewrite: true,
+    });
 } else {
 
     // using local api
@@ -24,18 +28,30 @@ if(config.mock.proxy){
 
     mock = async (ctx, next) => {
         let files = {};
+        let isJsFileExists, isJsonFileExists;
         try {
+            let data, json;
             files = getFiles(ctx);
+            isJsFileExists = fs.existsSync(files.js);
+            isJsonFileExists = fs.existsSync(files.json);
             // response with mock data
-            let data = await fs.readFileAsync(files.json);
-            let json = JSON.parse(data);
+
+            if(!isJsFileExists && !isJsonFileExists ){
+                return next();
+            }
+
+            if(isJsonFileExists) {
+                data = await fs.readFileAsync(files.json);
+            }
+
+            json = JSON.parse(data || '{}');
 
             let proc = new JSONProcessor({
                 module: files.js,
                 preStringify: false,
             });
             json = proc.process(
-                json,
+                json || {},
                 ctx.request.body,
                 qs.parse(ctx.url.split('?')[1]),
                 ctx
@@ -44,8 +60,8 @@ if(config.mock.proxy){
             ctx.body = json;
             ctx.type = 'json';
         } catch(err) {
-            if(files && files.json && fs.existsSync(files.json)){
-                console.error('[KS] render error, there may be something wrong with your .json files');
+            if(isJsFileExists || isJsonFileExists){
+                console.error(`[KS] mock data error, there may be something wrong with your .json files, url: ${ctx.url}`);
             } else{
                 return next();
             }

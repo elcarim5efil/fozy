@@ -34,20 +34,25 @@ let tplEngine = (option) => {
         }
 
         // template mock data
-        let data, gData, json;
+        let data, gData, json, isSyncDataExist;
         try {
             // page mock data
             data = await fs.readFileAsync(files.json, 'utf-8');
+            if(isSyncDataExist = fs.existsSync(files.json)){
+
+            }
             // string -> json
             json = JSON.parse(data);
             // global template mock data
-            if(fs.existsSync(globalJsonPath)) {
+            if(isSyncDataExist = fs.existsSync(globalJsonPath)) {
                 gData = await fs.readFileAsync(globalJsonPath, 'utf-8');
             }
             // combine with global data
             json = Object.assign(JSON.parse(gData), json);
         } catch (err) {
-            console.info('[KS] mock data parse error, there may be something wrong with your .json files');
+            if(isSyncDataExist) {
+                console.info(`[KS] mock data parse error, check your template .json files, url: ${ctx.url}`);
+            }
         }
 
         // process mock data with external js or stringify the specific object

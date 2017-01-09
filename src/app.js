@@ -18,9 +18,9 @@ const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
 
 // middlewares
-if(!config.mock.proxy) {
+// if(!config.mock.proxy) {
     app.use(convert(bodyparser));
-}
+// }
 app.use(convert(json()));
 if(config.logMode) {
     app.use(convert(logger()));
@@ -39,14 +39,16 @@ app.use(async (ctx, next) => {
   console.log(`[KS] ${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
+// pages index
+router.get('/fozy/index', indexPage);
+
 // route to mock server
 router.use('/', mockServer.routes(), mockServer.allowedMethods());
 
+// router.get('*', indexPage);
+
 app.use(router.routes(), router.allowedMethods());
 
-// pages index
-router.get('/fozy/index', indexPage);
-router.get('*', indexPage);
 
 app.on('error', function(err, ctx){
   console.log(err)
