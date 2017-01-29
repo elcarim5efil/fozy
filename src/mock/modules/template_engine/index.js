@@ -1,15 +1,14 @@
 
 'use strict';
 
-const path = require('path');
-const fs = require('../../promise/fs');
-const _ = require('../../util/extend');
+import path from 'path';
+import fs from '../../../promise/fs';
+import  _ from '../../../util/extend';
 const __root = fozy.__root;
-const config = require(path.join(__root, 'fozy.config'));
+const config  = require(path.join(__root, 'fozy.config'));
 
-const qs = require('querystring');
-const requireNew = require('../../util/require_from_new.js');
-const JSONProcessor = require('./json.processor.js');
+import qs from 'querystring';
+import JSONProcessor from '../../../util/json.processor.js';
 
 const globalJsonPath = path.join(__root, config.template.mock, '__global/data.json');
 
@@ -18,7 +17,7 @@ let engine;
 let tplEngine = (option) => {
     let fileType = '';
     if(option.engine == 'ftl') {
-        engine = require('../../engine/freemarker')({
+        engine = require('../../../engine/freemarker')({
             viewRoot: path.join(__root, config.template.root || ''),
             options: {
                 // sourceEncoding: 'UTF-8',

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>demo</title>
+    <title>demo demo</title>
     <link rel="stylesheet" href="/css/base.css" media="screen" title="no title">
 </head>
 <body>

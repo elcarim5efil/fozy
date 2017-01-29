@@ -1,14 +1,14 @@
 
 'use strict';
 
-const fs = require('../../lib/promise/fs');
-const path = require('path');
+import fs from '../../lib/promise/fs';
+import path from 'path';
 const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
 const router = require('koa-router')();
 
-const apiMock = require('./modules/api_mock.js');
-const templateEngine = require('./modules/template_engine');
+import apiMock from './modules/api_mock.js';
+import templateEngine from './modules/template_engine';
 
 // template mock
 router.get('*', templateEngine({engine: 'ftl'}));

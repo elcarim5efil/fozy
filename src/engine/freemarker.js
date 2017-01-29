@@ -1,7 +1,7 @@
 
 'use strict';
 
-const Freemarker = require('freemarker.js');
+import Freemarker from 'freemarker.js';
 
 module.exports = (option) => {
     let fm = new Freemarker(option);

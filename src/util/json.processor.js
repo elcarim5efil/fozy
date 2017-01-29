@@ -1,8 +1,8 @@
 
 'use strict';
 
-const requireNew = require('../../util/require_from_new.js');
-const fs = require('../../promise/fs');
+import requireNew from './require_from_new';
+import fs from '../promise/fs';
 
 class JSONProcessor {
     constructor(option) {

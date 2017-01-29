@@ -1,6 +1,6 @@
 module.exports = function(json, params){
-    console.log('ss');
-    console.log('ok');
-    json.msg = "I am new!!" + Math.random();
+    var num = Math.random();
+    console.log(num);
+    json.msg = "I am new!!" + num;
     return json;
 };
