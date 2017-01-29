@@ -4,9 +4,8 @@
 import path from 'path';
 import _  from '../../util/extend';
 const __root = fozy.__root;
-const config = require(path.join(__root, 'fozy.config'));
-
-let proxyConf = config.mock.proxy;
+const config = fozy.__config;
+const proxyConf = config.mock.proxy;
 let mock;
 
 if(config.mock.proxy){

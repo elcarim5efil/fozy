@@ -5,7 +5,6 @@ import path from 'path';
 import _  from '../../../util/extend';
 const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
-import $proxy from './proxy';
 
 // using local api
 

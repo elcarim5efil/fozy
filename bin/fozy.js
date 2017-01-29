@@ -4,8 +4,10 @@
 
 const path = require('path');
 if(!!!global.fozy) {
+    let root = path.join(process.cwd());
     global.fozy = {
-        __root: path.join(process.cwd()),
+        __root: root,
+        __config: require(path.join(root, 'fozy.config')),
     }
 }
 
