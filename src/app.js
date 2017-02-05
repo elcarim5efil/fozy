@@ -1,19 +1,19 @@
 
 'use strict';
 
-const Koa = require('koa');
+import Koa from 'koa';
 const app = new Koa();
 const router = require('koa-router')();
-const co = require('co');
-const convert = require('koa-convert');
-const json = require('koa-json');
-const onerror = require('koa-onerror');
+import co from 'co';
+import convert from 'koa-convert';
+import json from 'koa-json';
+import onerror from 'koa-onerror';
 const bodyparser = require('koa-bodyparser')();
-const logger = require('koa-logger');
-const path = require('path');
+import logger from 'koa-logger';
+import path from 'path';
 
-const mockServer = require('./mock');
-const indexPage = require('./router/index_page');
+import mockServer from './mock';
+import indexPage from './router/index_page';
 const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
 
@@ -24,6 +24,11 @@ if(!config.mock.proxy) {
 app.use(convert(json()));
 if(config.logMode) {
     app.use(convert(logger()));
+}
+
+// setup live reload
+if (global.fozy.__dev.watch) {
+    app.use(require('./live_reload'));
 }
 
 // static files

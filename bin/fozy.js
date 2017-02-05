@@ -7,6 +7,7 @@ if(!!!global.fozy) {
     let root = path.join(process.cwd());
     global.fozy = {
         __root: root,
+        __dev: {},
     }
     try{
         global.fozy.__config = require(path.join(root, 'fozy.config'));
@@ -36,6 +37,7 @@ Please visit Github repository https://github.com/elcarim5efil/fozy for more inf
 });
 
 cli.on(['-w', '--watch'], function(){
+    global.fozy.__dev.watch = true;
     var app = require('../index');
     app.run({watch:true});
 });

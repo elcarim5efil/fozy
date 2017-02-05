@@ -24,30 +24,11 @@ process.on('uncaughtException', function(err){
     } else {
         console.log('[KS] Undandle error', err);
     }
-
 });
-
-var files2Watch = [];
-files2Watch.push(path.join(__root, config.template.root || ''));
-files2Watch  = files2Watch.concat(config.watch.map(function(item){
-    return path.join(__root, item);
-}));
 
 function doListen(){
     listener = app.listen(port, function(){
         console.log('[KS] Koa server is listening to port %d', listener.address().port);
-        if(watch) {
-            let browserSync = require('browser-sync').create();
-            browserSync.init({
-                proxy: 'http://localhost:' + listener.address().port,
-                port: config.port + 1,
-                files: files2Watch,
-                notify: false,
-                ui: false,
-                online: false,
-                open: config.autoOpen,
-            });
-        }
     });
 };
 
