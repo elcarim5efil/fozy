@@ -1,5 +1,5 @@
 var config = {
-    port: 9000,
+    port: 3000,
     maxRetry: 10,
     logMode: 0,
     autoOpen: false,

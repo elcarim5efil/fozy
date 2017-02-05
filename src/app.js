@@ -18,9 +18,9 @@ const __root = fozy.__root;
 const config = require(path.join(__root, 'fozy.config'));
 
 // middlewares
-// if(!config.mock.proxy) {
+if(!config.mock.proxy) {
     app.use(convert(bodyparser));
-// }
+}
 app.use(convert(json()));
 if(config.logMode) {
     app.use(convert(logger()));

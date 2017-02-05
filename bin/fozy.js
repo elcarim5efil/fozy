@@ -7,8 +7,10 @@ if(!!!global.fozy) {
     let root = path.join(process.cwd());
     global.fozy = {
         __root: root,
-        __config: require(path.join(root, 'fozy.config')),
     }
+    try{
+        global.fozy.__config = require(path.join(root, 'fozy.config'));
+    } catch(e) {}
 }
 
 const pack = require('../package.json');
