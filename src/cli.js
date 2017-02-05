@@ -15,7 +15,15 @@ class Cli {
         }).bind(this))
     }
 
-    run(argvs) {
+    end() {
+
+    }
+
+    normal() {
+
+    }
+
+    parse(argvs) {
         if(argvs.length === 0) {
             this.normal();
             return;
@@ -32,10 +40,11 @@ class Cli {
                 ++i;
             } else {
                 console.log(`${argvs[i]} is invalid, please use -h or --help for help`);
-                this.run(['-h']);
+                this.parse(['-h']);
                 return;
             }
         }
+        this.end();
     }
 }
 

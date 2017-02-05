@@ -31,7 +31,6 @@ Input `http://localhost:9000/fozy/index` in your browser to view your page list
 
 Run `fozy -w` to enter watch mode.
 
-Will start the watch mode, which will need to use another port. When your configured port is `9000`, then `9001` will be used as the watch mode port, which means you should use `http://localhost:9001/fozy/index`.
 
 # Configuration
 
@@ -45,12 +44,20 @@ var config = {
   autoOpen: false,  // false: disable auto open browser when watching
   htmlView: './views',  // .html files
   mock: {  // mock api data
-    proxy: 'http://proxy.com', // if not empty, use api proxy
     api: {
-        root: './mock/api',   // api root
-        get: 'get',           // get method root, ./mock/api/get
-        post: 'fetch',        // post method root, ./mock/api/fetch
+      root: './mock/api',   // api root
+      get: 'get',           // get method root, ./mock/api/get
+      post: 'fetch',        // post method root, ./mock/api/fetch
     },
+    proxyMap: {             // proxy configuration map
+      online: {
+        host: 'online.com',                 // not necessary
+        target: 'http://xxx.xxx.xxx.xxx',   // proxy target location
+      },
+      local: {
+        target: 'http://xxx.xxx.xxx.xxx',
+      },
+    }
     fileName: 'data',         // specific mock data file name, 'data.json'
                               // or you can just assign it to false, then the file name will be deault according to the url
                               // etc: url =>GET /test/getData, the mock data file name will be getData.json
@@ -66,8 +73,8 @@ var config = {
     './src'
   ],
   watch: [  // live reload path, template files are automatically watched
-    './src/css',
-    './src/js',
+    './src/css/**/*.css',
+    './src/js/**/*.js',
   ],
   pages: [  // page configuration
         {name: 'demo page 1', url: '/demo', path: './demo.ftl'},
@@ -103,6 +110,10 @@ module.exports = function(json, body, query){
 
 So far, the post content-type are limited to `application/json`, `application/x-www-form-urlencoded`.
 
+# proxy api
+
+`fozy -p {proxyName}`, choose the proxy configuration in the proxyMap and use it as the async data server, exp: `fozy -w -p online`, use online server while starting the live-reload mode.
+
 # pre-stringify template mock data
 
 When you need to use json-string in template mock data in order to passing some data to javascript (just like what we usually do when passing data from freemarker to javascript)
@@ -132,5 +143,6 @@ In this way, the server will stringify the specific mock data defined in `__json
 -v, --version, print version
 -h, --help, print help
 -w, --watch, start live-reload with browser-sync
+-p, --proxy {proxyName}, using proxy api, {proxyName} should be contained in de proxyMap
 --init, initialize the project, so far, create fozy.config.js
 ```

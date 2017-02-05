@@ -27,15 +27,19 @@ process.on('uncaughtException', function(err){
 });
 
 function doListen(){
-    listener = app.listen(port, function(){
+    return listener = app.listen(port, function(){
         console.log('[KS] Koa server is listening to port %d', listener.address().port);
     });
 };
 
 var entry = {
     run: function(options){
-        watch = options.watch;
-        doListen();
+        if(!listener ) {
+            watch = options.watch;
+            return doListen();
+        } else {
+            return listener;
+        }
     }
 }
 
