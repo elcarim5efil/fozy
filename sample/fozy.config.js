@@ -10,7 +10,10 @@ var config = {
             get: 'get',
             post: 'post',
         },
-        // proxy: 'http://localhost:9000',
+        proxy: {
+            // host: 'localhost:9000',
+            target: 'http://localhost:9000',
+        },
         fileName: 'data',
     },
     template: {
