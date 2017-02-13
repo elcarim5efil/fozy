@@ -20,7 +20,7 @@
 
 ```javascript
 var config = {
-  port: 9000,                   // 如果不启用live-reload功能, 那么则只会使用这个端口, 但如果要启用live-reload功能, 那么就多使用一个端口, 如:9001, 此时应该访问`localhost:9001`
+  port: 9000,                   // 端口号
   maxRetry: 10,                 // 端口被占用后的重试次数, 端口被占用后会自动+1, 知道能够建立服务器为止
   logMode: 0,                   // 日志打印模式, 0: simple mode, 1: complete mode
   autoOpen: false,              // 启动后自动打开浏览器开关, 仅在watch模式下有效(fozy -w)
@@ -28,8 +28,27 @@ var config = {
 
   // 异步数据mock服务器配置
   mock: {                       
-    proxy: 'http://proxy.com',  // 不设置或为false时无效, 异步数据代理, 可以启动java服务器, 并将异步请求转给java服务器从而获取异步数据, 此时模版渲染与静态文件仍然由fozy提供, 即仍然可以使用live-reload功能
-    api: './mock/api',          // 本地mock数据根目录
+    // 本地mock
+    api: {
+      root: './mock/api',   // 本地mock数据根目录
+      // 设置各个方法mock数据的路径, 为''时则放在根目录下
+      get: 'get',           // get方法数据路径, ./mock/api/get
+      post: 'fetch',        // post方法数据路径, ./mock/api/fetch
+    },
+    // 本地mock数据文件名(为了适用各个工程, 后期需要优化这个设置项)
+    fileName: 'data',         // 'data.json', 'data.js'
+                              // 设置为false时, 文件名会直接使用url的最后一级
+                              // 例如: url =>GET /test/getData, 文件名为getData.json
+    // 代理设置
+    proxyMap: {             // proxy 配置表, 设置各个代理服务地址和域名
+      online: {             // 配置名
+        host: 'online.com',                 // 服务器域名, 非必须
+        target: 'http://xxx.xxx.xxx.xxx',   // 服务器地址
+      },
+      local: {
+        target: 'http://xxx.xxx.xxx.xxx',
+      },
+    }
   },     
 
   // 模版渲染配置
@@ -118,6 +137,7 @@ module.exports = function(json, body, query){
 -v, --version, print version
 -h, --help, print help
 -w, --watch, start live-reload with browser-sync
+-p, --proxy {proxyName}, using proxy api, {proxyName} should be contained in de proxyMap
 --init, initialize the project, so far, create fozy.config.js
 --nei {key}, fetch nei configuration from nei server and construct a fozy.config.js
 ```
@@ -126,7 +146,6 @@ module.exports = function(json, body, query){
 
 当前无论是系统结构还是功能上还很不完善:
 
-- live-reload是用了browser-sync模块, 要多占用一个端口, 需要考虑自己实现live-reload功能;
 - mcss编译器没有集成进去;
 - 报错提示需要完善, 否则当遇到页面无法加载时无法定位错误;
 - 没有自动打包功能;
