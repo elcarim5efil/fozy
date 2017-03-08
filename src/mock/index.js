@@ -26,4 +26,4 @@ router.get('*', async (ctx, next) => {
 
 router.all('*', apiMock);
 
-module.exports = router;
+export default router;

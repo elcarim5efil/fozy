@@ -1,3 +1,4 @@
+const fs = require('fs');
 let _ = {
     /**
     * remove postfix from the path, '/mock/demo.ftl' => '/mock/demo'
@@ -40,6 +41,14 @@ let _ = {
         });
         return res;
     },
+
+    isFileExist(path) {
+        try {
+            return fs.existsSync(path);
+        } catch (e) {
+            return false;
+        }
+    }
 }
 
 module.exports = _;

@@ -1,8 +1,8 @@
 
 'use strict';
 
-const path = require('path');
-module.exports = function requireWithNoCache(file){
+import path from 'path';
+export default function requireWithNoCache(file){
     delete require.cache[path.resolve(file)];
     return require(file);
 }
