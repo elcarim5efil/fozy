@@ -13,7 +13,10 @@ module.exports = (option) => {
                     if(err) {
                         reject(err);
                     } else {
-                        resolve(html);
+                        resolve({
+                            html: html,
+                            output: output,
+                        });
                     }
                 });
             });

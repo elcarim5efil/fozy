@@ -2,22 +2,21 @@
 'use strict';
 
 import Koa from 'koa';
-const app = new Koa();
-const router = require('koa-router')();
 import co from 'co';
 import convert from 'koa-convert';
 import json from 'koa-json';
 import onerror from 'koa-onerror';
-const bodyparser = require('koa-bodyparser')();
+import KoaBodyparser from 'koa-bodyparser';
 import logger from 'koa-logger';
 import path from 'path';
 
-import mockServer from './mock';
-import indexPage from './router/index_page';
-const __root = fozy.__root;
-const config = require(path.join(__root, 'fozy.config'));
+import router from './router';
 
-// middlewares
+const bodyparser = KoaBodyparser();
+const app = new Koa();
+const __root = fozy.__root;
+const config = fozy.__config;
+
 if(!config.mock.proxy) {
     app.use(convert(bodyparser));
 }
@@ -33,7 +32,9 @@ if (global.fozy.__dev.watch) {
 
 // static files
 config.resource.forEach(function(item){
-    app.use(convert(require('koa-static')(path.join(__root, item))));
+    var staticFilePath = path.join(__root, item);
+    var staticRoute = convert(require('koa-static')(staticFilePath));
+    app.use(staticRoute);
 })
 
 // logger
@@ -44,16 +45,7 @@ app.use(async (ctx, next) => {
   console.log(`[KS] ${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
-// pages index
-router.get('/fozy/index', indexPage);
-
-// route to mock server
-router.use('/', mockServer.routes(), mockServer.allowedMethods());
-
-// router.get('*', indexPage);
-
 app.use(router.routes(), router.allowedMethods());
-
 
 app.on('error', function(err, ctx){
   console.log(err)
