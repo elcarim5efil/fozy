@@ -4,7 +4,7 @@
 import path from 'path';
 import _  from '../../../util/extend';
 const __root = fozy.__root;
-const config = require(path.join(__root, 'fozy.config'));
+const config = fozy.__config;
 
 import qs from 'querystring';
 import JSONProcessor from '../../../util/json.processor.js';
@@ -12,25 +12,22 @@ import LocalData from '../local_data';
 
 export default class AsyncData {
     constructor(ctx) {
-        this.files = {};
         this.ctx = ctx;
+        this.filePath = this.getFilePath(ctx) || '';
         this.data = {};
     }
 
     getData() {
-        let files = this.files = this.getFiles(this.ctx);
-
-        let data = this.data = new LocalData({
-            path: files.json,
+        this.data = new LocalData({
+            path: this.filePath,
         }).getData();
 
-        return this.processData(data);
+        return this.processData(this.data, this.ctx);
     }
 
-    processData(data) {
-        let ctx = this.ctx;
+    processData(data, ctx) {
         let proc = new JSONProcessor({
-            module: this.files.js + '.js',
+            module: this.filePath + '.js',
             preStringify: false,
         });
 
@@ -42,20 +39,12 @@ export default class AsyncData {
         );
     }
 
-    getFiles(ctx){
-        let files = {};
+    getFilePath(ctx){
         let url = _.removePostfix(ctx.url.split('?')[0]);
         let method = ctx.method.toLocaleLowerCase();
         let root = path.join(__root, config.mock.api.root, method && config.mock.api[method]);
-        let fileName = config.mock.fileName;
-        if(!fileName) {
-            files.json = path.join(root, url);
-            files.js = path.join(root, url);
-        } else {
-            files.json = path.join(root, url, fileName);
-            files.js = path.join(root, url, fileName);
-        }
-        return files;
+        let fileName = config.mock.fileName || '';
+        return path.join(root, url, fileName);
     }
 }
 

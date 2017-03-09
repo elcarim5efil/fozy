@@ -4,7 +4,7 @@
 import _path from 'path';
 import  _ from '../../../util/extend';
 const __root = fozy.__root;
-const config  = require(_path.join(__root, 'fozy.config'));
+const config = fozy.__config;
 
 import qs from 'querystring';
 import LocalData from '../local_data';

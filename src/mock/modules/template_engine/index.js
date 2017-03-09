@@ -4,7 +4,7 @@
 import path from 'path';
 import  _ from '../../../util/extend';
 const __root = fozy.__root;
-const config  = require(path.join(__root, 'fozy.config'));
+const config = fozy.__config;
 const templateRoot = path.join(__root, config.template.root || '');
 
 import SyncData from './sync_data.js';
