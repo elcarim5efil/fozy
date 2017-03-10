@@ -66,9 +66,9 @@ function initFozyConfigJSFile(){
 }
 
 function runNeiSetup(arg){
-    let nei = require('../lib/nei');
+    let Nei = require('../lib/nei');
     isReady2RunServer = false;
-    nei.build(arg);
+    new Nei(arg).build();
 }
 
 function printVersion(){

@@ -1,6 +1,7 @@
 
 'use strict';
 
+require('babel-polyfill');
 const _request = require('request');
 
 let req = async function(option){

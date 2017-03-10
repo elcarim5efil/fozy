@@ -6,7 +6,7 @@ var config = {
     autoOpen:true,
     mock: {
         api: {
-            root: '{{{apiMock}}}',
+            root: '{{{asyncMockRoot}}}',
             get: 'get',
             post: 'post',
         },
@@ -16,18 +16,18 @@ var config = {
     template: {
         engine: 'ftl',
         root: '{{{templatesRoot}}}',
-        mock: '{{{templatesMock}}}',
+        mock: '{{{syncMockRoot}}}',
     },
     resource: [
-        '{{{webRoot}}}'
+        '{{{resourceRoot}}}'
     ],
     watch: [
-        '{{{webRoot}}}/src/css/**/*.css',
-        '{{{webRoot}}}/src/stylesheet/**/*.css',
-        '{{{webRoot}}}/src/js/**/*.js',
-        '{{{webRoot}}}/src/javascript/**/*.js',
-        '{{{webRoot}}}/src/js/**/*.html',
-        '{{{webRoot}}}/src/javascript/**/*.html',
+        '{{{resourceRoot}}}/src/css/**/*.css',
+        '{{{resourceRoot}}}/src/stylesheet/**/*.css',
+        '{{{resourceRoot}}}/src/js/**/*.js',
+        '{{{resourceRoot}}}/src/javascript/**/*.js',
+        '{{{resourceRoot}}}/src/js/**/*.html',
+        '{{{resourceRoot}}}/src/javascript/**/*.html',
     ],
     pages: [
         {{#each pages}}
