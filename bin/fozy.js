@@ -1,7 +1,5 @@
 #!/usr/bin/env node
-
 'use strict';
-
 const path = require('path');
 const Cli = require('../lib/cli');
 let cli = new Cli();

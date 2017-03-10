@@ -1,49 +1,48 @@
 {
-  "name": "fozy",
-  "version": "0.3.0",
-  "description": "",
-  "main": "index.js",
-  "bin": {
-    "fozy": "bin/fozy.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "./node_modules/.bin/babel -d lib/ src/ --watch"
-  },
-  "author": "elcarim5efil",
-  "license": "MIT",
-  "keywords": [
-    "front-end develop",
-    "koa2",
-    "live-reload",
-    "browser-sync",
-    "fozy"
-  ],
-  "repository": "https://github.com/elcarim5efil/fozy",
-  "dependencies": {
-    "babel-polyfill": "^6.13.0",
-    "bluebird": "^3.4.6",
-    "browser-sync": "^2.16.0",
-    "co": "^4.6.0",
-    "freemarker.js": "^1.2.2",
-    "handlebars": "^4.0.5",
-    "koa": "^2.0.0",
-    "koa-bodyparser": "^2.0.1",
-    "koa-browser-sync": "^1.0.1",
-    "koa-convert": "^1.2.0",
-    "koa-json": "^1.1.1",
-    "koa-logger": "^1.3.0",
-    "koa-onerror": "^1.2.1",
-    "koa-router": "^7.0.0",
-    "koa-static": "^2.0.0",
-    "koa2-http-proxy": "0.0.4",
-    "mkdirp": "^0.5.1",
-    "request": "^2.75.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.14.0",
-    "babel-plugin-transform-async-to-generator": "^6.8.0",
-    "babel-preset-es2015": "^6.14.0",
-    "babel-preset-stage-3": "^6.11.0"
-  }
+    "name": "fozy",
+    "version": "0.3.2",
+    "description": "",
+    "main": "index.js",
+    "bin": {
+        "fozy": "bin/fozy.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "compile": "./node_modules/.bin/babel -d lib/ src/ --watch"
+    },
+    "author": "elcarim5efil",
+    "license": "MIT",
+    "keywords": [
+        "front-end develop",
+        "koa2",
+        "live-reload",
+        "browser-sync",
+        "fozy"
+    ],
+    "repository": "https://github.com/elcarim5efil/fozy",
+    "dependencies": {
+        "babel-polyfill": "^6.13.0",
+        "bluebird": "^3.4.6",
+        "browser-sync": "^2.16.0",
+        "co": "^4.6.0",
+        "freemarker.js": "^1.2.2",
+        "handlebars": "^4.0.5",
+        "koa": "^2.0.0",
+        "koa-bodyparser": "^2.0.1",
+        "koa-browser-sync": "^1.0.1",
+        "koa-convert": "^1.2.0",
+        "koa-json": "^1.1.1",
+        "koa-logger": "^1.3.0",
+        "koa-onerror": "^1.2.1",
+        "koa-router": "^7.0.0",
+        "koa-static": "^2.0.0",
+        "koa2-http-proxy": "0.0.4",
+        "request": "^2.75.0"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.14.0",
+        "babel-plugin-transform-async-to-generator": "^6.8.0",
+        "babel-preset-es2015": "^6.14.0",
+        "babel-preset-stage-3": "^6.11.0"
+    }
 }

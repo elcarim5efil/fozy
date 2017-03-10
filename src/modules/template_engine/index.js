@@ -32,6 +32,7 @@ export default class Engine {
     getRouter(option) {
         return async (ctx, next) => {
             let tplPath = this.getPathByUrl(_.removeQueryString(ctx.url));
+            console.log(tplPath);
 
             if( !this.isTplFileExist(tplPath) ){
                 return next();
@@ -70,7 +71,7 @@ export default class Engine {
             output: '',
             html: '',
         };
-        
+
         try {
             result = await this.engine.render(tplPath, json || {});
         } catch(err) {
