@@ -25,7 +25,7 @@
         "bluebird": "^3.4.6",
         "browser-sync": "^2.16.0",
         "co": "^4.6.0",
-        "freemarker.js": "^1.2.2",
+        "freemarker.js": "1.2.2",
         "handlebars": "^4.0.5",
         "koa": "^2.0.0",
         "koa-bodyparser": "^2.0.1",
