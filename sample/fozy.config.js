@@ -9,6 +9,10 @@ var config = {
             root: './mock/api/',
             get: 'get',
             post: 'post',
+            defaultData: {
+                code: 200,
+                desc: 'success'
+            }
         },
         proxyMap: {
             // host: 'localhost:9000',
