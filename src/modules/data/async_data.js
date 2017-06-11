@@ -17,8 +17,8 @@ export default class AsyncData {
         this.data = {};
     }
 
-    getData() {
-        this.data = new LocalData({
+    async getData() {
+        this.data = await new LocalData({
             path: this.filePath,
         }).getData();
 

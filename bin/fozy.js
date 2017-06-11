@@ -52,7 +52,7 @@ function runInProxyMode(arg){
         let proxy = global.fozy.__config.mock.proxyMap[arg];
         if(proxy){
             console.log('proxy: ', arg);
-            global.fozy.__config.mock.proxy = proxy;
+            global.fozy.__config.mock._proxy = proxy;
         }
     }
 }

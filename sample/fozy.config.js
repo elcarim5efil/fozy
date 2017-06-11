@@ -10,7 +10,7 @@ var config = {
             get: 'get',
             post: 'post',
         },
-        proxy: {
+        proxyMap: {
             // host: 'localhost:9000',
             target: 'http://localhost:9000',
         },

@@ -11,7 +11,9 @@ export default class LocalMock {
     getMocker() {
         var mock = async (ctx, next) => {
             try {
-                ctx.body = new AsyncData(ctx).getData();
+                let data = await new AsyncData(ctx).getData();
+                console.log(data);
+                ctx.body = data;
                 ctx.type = 'json';
             } catch(err) {
                 return next();

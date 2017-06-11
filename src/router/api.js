@@ -7,7 +7,7 @@ import { Proxy, Local } from '../modules/async_mock';
 
 const __root = fozy.__root;
 const config = fozy.__config;
-const proxyConf = config.mock.proxy;
+const proxyConf = config.mock._proxy;
 
 export default class Api {
     constructor() {
