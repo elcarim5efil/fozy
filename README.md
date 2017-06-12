@@ -48,6 +48,10 @@ var config = {
       root: './mock/api',   // api root
       get: 'get',           // get method root, ./mock/api/get
       post: 'fetch',        // post method root, ./mock/api/fetch
+      defaultData: {
+          code: 200,
+          msg: 'success'
+      }
     },
     proxyMap: {             // proxy configuration map
       online: {
@@ -108,7 +112,36 @@ module.exports = function(json, body, query){
 }
 ```
 
+You can also setup default mock data by `mock.api.defaultData`, which should be a valid Object.
+
+```javascript
+{
+    mock: {
+        api: {
+            defaultData: {
+                code: 200,
+                msg: 'success'
+            }
+        }
+    }
+}
+```
+
 So far, the post content-type are limited to `application/json`, `application/x-www-form-urlencoded`.
+
+# json5
+
+Mock data can `.json5` or `.json` file, `.json5` has the higher level which means that if `.json` will be ignored when `.json5` file exists, and `.json5` is also recommanded because of its flexibilty.
+
+```json5
+{
+    code: 200,
+    msg: 'success',
+    data: {
+        x: 1
+    }
+}
+```
 
 # proxy api
 
