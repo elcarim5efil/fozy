@@ -2,7 +2,7 @@
 'use strict';
 
 import proxy from 'http-proxy';
-let proxyConf = fozy.__config.mock.proxy;
+let proxyConf = fozy.__config.mock._proxy;
 
 module.exports = (option, type) => {
     if(typeof option === 'string') {
