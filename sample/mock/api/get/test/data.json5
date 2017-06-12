@@ -1,5 +1,5 @@
 {
     // comment
-    msg: 'Hello world',
+    msg: 'Hello world json5',
     as: 123
 }

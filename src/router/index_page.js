@@ -2,7 +2,7 @@
 'use strict';
 
 import handlebars from 'handlebars';
-import fs from '../../lib/promise/fs.js'
+import fs from '../promise/fs.js'
 import path from 'path';
 
 const __root = fozy.__root;

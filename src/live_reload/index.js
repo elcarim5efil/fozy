@@ -2,7 +2,7 @@
 'use strict';
 
 import path from 'path';
-import koaBrowserSync from 'koa-browser-sync';
+import koaBrowserSync from './browser.sync.js';
 
 const __root = fozy.__root;
 const config = fozy.__config;
@@ -13,12 +13,17 @@ files2Watch  = files2Watch.concat(config.watch.map(function(item){
     return path.join(__root, item);
 }));
 
-
-module.exports = koaBrowserSync({
+var browserSyncOption = {
     init: true,
+    watchOptions: {
+        ignored: config.ignoredWatch || ''
+    },
     files: files2Watch,
-    notify: false,
+    notify: config.notify || false,
     ui: false,
     online: false,
-    open: config.autoOpen,
-});
+    logLevel: 'slient',
+    open: true || config.autoOpen
+};
+
+module.exports = koaBrowserSync(browserSyncOption);

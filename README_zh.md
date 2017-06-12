@@ -100,6 +100,35 @@ module.exports = function(json, body, query){
 
 `data.json`和`data.js`文件更新后, 不需要重新其他fozy, 只需要重新发送请求就可以看到效果.
 
+通过 `mock.api.defaultData` 字段设置默认 mock 数据。
+
+```javascript
+{
+    mock: {
+        api: {
+            defaultData: {
+                code: 200,
+                msg: 'success'
+            }
+        }
+    }
+}
+```
+
+# json5
+
+Mock 数据文件可以为 `.json5` 或 `.json` file， 如果两种格式同时存在，`.json5` 会被优先解析，`.json` 则会被忽略。更推荐使用灵活的 `.json5` 格式.
+
+```json5
+{
+    code: 200,
+    msg: 'success',
+    data: {
+        x: 1
+    }
+}
+```
+
 # 将模版mock数据转换为JSON
 
 使用ftl时候, 如果JS中需要用到来自服务器的同步数据, 则需要将数据转换为JSON并写在页面当中. 但是如果在mock 数据文件中管理一个JSON字符串是非常麻烦的事情, 因此fozy中加入了将mock数据中的object转换为JSON的功能. 只需要在mock数据中加入一个字段`__json`, 并在这个字段中写入一个数据, 指定需要转换为JSON的数据, 那么在渲染ftl模版前就会先进行转换再实现渲染.

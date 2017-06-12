@@ -5,7 +5,7 @@ import $proxy from './proxy';
 
 export default class {
     constructor() {
-        this.config = fozy.__config.mock.proxy;
+        this.config = fozy.__config.mock._proxy;
         this.headers = {
             'accept-encoding': 'gzip;q=0,deflate,sdch,br',
         }

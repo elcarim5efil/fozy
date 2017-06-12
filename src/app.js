@@ -17,7 +17,7 @@ const app = new Koa();
 const __root = fozy.__root;
 const config = fozy.__config;
 
-if(!config.mock.proxy) {
+if(!config.mock._proxy) {
     app.use(convert(bodyparser));
 }
 app.use(convert(json()));
