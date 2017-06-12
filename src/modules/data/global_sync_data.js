@@ -13,8 +13,8 @@ export default class GlobalSyncData {
 
     }
 
-    getData() {
-        return new LocalData({
+    async getData() {
+        return await new LocalData({
             path: globalJsonPath,
         }).getData();
     }

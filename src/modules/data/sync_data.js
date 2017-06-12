@@ -25,11 +25,11 @@ export default class MockData {
         return this.data || this.updateData();
     }
 
-    updateData() {
+    async updateData() {
         let data;
         try {
-            let globalData = new GlobalSyncData().getData();
-            let pageData = new LocalData({
+            let globalData = await new GlobalSyncData().getData();
+            let pageData = await new LocalData({
                 path: this.pageDataPath,
             }).getData();
             data = Object.assign({}, globalData, pageData);

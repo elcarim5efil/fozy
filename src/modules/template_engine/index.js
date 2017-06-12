@@ -37,7 +37,7 @@ export default class Engine {
                 return next();
             }
 
-            let json = this.getSyncData(ctx, tplPath);
+            let json = await this.getSyncData(ctx, tplPath);
             await this.respondHtml(ctx, json, tplPath);
         };
     }
@@ -57,8 +57,8 @@ export default class Engine {
         return tplPath !== -1 && _.isFileExist( path.join(templateRoot, tplPath) )
     }
 
-    getSyncData(ctx, tplPath) {
-        return new SyncData({
+    async getSyncData(ctx, tplPath) {
+        return await new SyncData({
             ctx: ctx,
             fileType: this.fileType,
             path: _.removePostfix(tplPath),
@@ -70,7 +70,7 @@ export default class Engine {
             output: '',
             html: '',
         };
-        
+
         try {
             result = await this.engine.render(tplPath, json || {});
         } catch(err) {
