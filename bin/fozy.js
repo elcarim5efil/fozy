@@ -35,25 +35,25 @@ function setFozyObj(){
     if(!!!global.fozy) {
         let root = path.join(process.cwd());
         global.fozy = {
-            __root: root,
-            __dev: {},
+            root: root,
+            dev: {},
         }
     }
 }
 
 function runInWatchMode(){
     readyToRunServer();
-    global.fozy.__dev.watch = true;
+    global.fozy.dev.watch = true;
 }
 
 function runInProxyMode(arg){
     readyToRunServer();
     if(isReady2RunServer) {
         console.log(`using proxy config: ${arg}`);
-        let proxy = global.fozy.__config.mock.proxyMap[arg];
+        let proxy = global.fozy.config.mock.proxyMap[arg];
         if(proxy){
             console.log('proxy: ', arg);
-            global.fozy.__config.mock._proxy = proxy;
+            global.fozy.config.mock.proxy = proxy;
         }
     }
 }
@@ -88,13 +88,13 @@ Options:
 
 Please visit Github repository https://github.com/elcarim5efil/fozy for more information.`);
 }
-
+_
 function readyToRunServer(){
-    if(global.fozy.__config) {
+    if(global.fozy.config) {
         return true;
     }
 
-    let fozyConfigPath = path.join(global.fozy.__root, 'fozy.config.js');
+    let fozyConfigPath = path.join(global.fozy.root, 'fozy.config.js');
 
     if( !isFileExist(fozyConfigPath) ) {
         console.log('Cannot find fozy.config.js, please make sure the file exists.');
@@ -102,7 +102,7 @@ function readyToRunServer(){
     }
 
     try{
-        global.fozy.__config = require(fozyConfigPath);
+        global.fozy.config = require(fozyConfigPath);
         isReady2RunServer = true;
     } catch(e) {
         console.log('Fail reading fozy.config.js, please check your file.');

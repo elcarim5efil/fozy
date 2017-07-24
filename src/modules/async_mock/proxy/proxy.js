@@ -1,34 +1,35 @@
+import Proxy from 'http-proxy';
 
-'use strict';
+const proxyConf = fozy.config.mock.proxy;
 
-import proxy from 'http-proxy';
-let proxyConf = fozy.__config.mock._proxy;
+module.exports = (_option) => {
+  let option;
+  if (typeof option === 'string') {
+    option = {
+      target: _option,
+    };
+  } else {
+    option = _option;
+  }
+  const proxy = Proxy.createProxyServer(option);
 
-module.exports = (option, type) => {
-    if(typeof option === 'string') {
-        option = {
-            target: option
-        }
+  proxy.on('proxyReq', (proxyReq) => {
+    if (proxyConf.host) {
+      proxyReq.setHeader('Host', proxyConf.host);
     }
-    let _proxy = proxy.createProxyServer(option);
+  });
 
-    _proxy.on('proxyReq', function(proxyReq, req, res){
-        if(proxyConf.host) {
-            proxyReq.setHeader('Host', proxyConf.host);
-        }
-    });
-
-    let doProxy = (ctx) => {
-        let req = ctx.req,
-        res = ctx.res;
-        ctx.response = false;
-        try{
-            _proxy.web(req, res);
-        }catch(err){
-            console.log('proxy error ', err);
-        }
+  const doProxy = (ctx) => {
+    const req = ctx.req;
+    const res = ctx.res;
+    ctx.response = false;
+    try {
+      proxy.web(req, res);
+    } catch (err) {
+      console.info('proxy error ', err);
     }
-    return async ctx => {
-        doProxy(ctx);
-    }
+  };
+  return async (ctx) => {
+    doProxy(ctx);
+  };
 };
