@@ -88,7 +88,7 @@ Options:
 
 Please visit Github repository https://github.com/elcarim5efil/fozy for more information.`);
 }
-_
+
 function readyToRunServer(){
     if(global.fozy.config) {
         return true;

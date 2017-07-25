@@ -5,32 +5,42 @@ require('babel-polyfill');
 const app = require('./lib/app');
 const path = require('path');
 
-const config = require(path.join(fozy.__root, 'fozy.config')),
-  __root = fozy.__root;
+const configPath = path.join(fozy.root, 'fozy.config');
+/* eslint-disable */
+const config = require(configPath);
+/* eslint-enable */
 
-let listener,
-  MAX_RETRY = config.maxRetry || 10,
-  port = config.port || 3000,
-  watch = false;
+const MAX_RETRY = config.maxRetry || 10;
+
+let listener;
+let port = config.port || 3000;
+let maxRetry = MAX_RETRY;
+
+function doListen() {
+  listener = app.listen(port, () => {
+    console.info('[KS] Koa server is listening to port %d', listener.address().port);
+  });
+  return listener;
+}
 
 process.on('uncaughtException', (err) => {
   if (err.code === 'EADDRINUSE') {
-    if (--MAX_RETRY > 0) {
-      console.log('[KS] Port %d is in used, trying port %d', port, ++port);
+    maxRetry -= 1;
+    if (maxRetry > 0) {
+      port += 1;
+      console.info('[KS] Port %d is in used, trying port %d', port - 1, port);
       doListen();
     } else {
-      console.log('[KS] Retry to much time(%d)', MAX_RETRY);
+      console.info('[KS] Retry to much time(%d)', maxRetry);
     }
   } else {
-    console.log('[KS] Undandle error', err);
+    console.info('[KS] Undandle error', err);
   }
 });
 
-function doListen() {
-  return listener = app.listen(port, () => {
-    console.log('[KS] Koa server is listening to port %d', listener.address().port);
-  });
-}
+/* eslint-disable */
+var watch = false;
+/* eslint-enable */
 
 const entry = {
   run(options) {
