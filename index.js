@@ -1,11 +1,11 @@
-
-
 require('babel-polyfill');
 
 const app = require('./lib/app');
 const path = require('path');
 
 const configPath = path.join(fozy.root, 'fozy.config');
+const log = require('./lib/util/log').default;
+
 /* eslint-disable */
 const config = require(configPath);
 /* eslint-enable */
@@ -18,7 +18,7 @@ let maxRetry = MAX_RETRY;
 
 function doListen() {
   listener = app.listen(port, () => {
-    console.info('[KS] Koa server is listening to port %d', listener.address().port);
+    log.info('Server is listening to port %d', listener.address().port);
   });
   return listener;
 }
@@ -28,13 +28,13 @@ process.on('uncaughtException', (err) => {
     maxRetry -= 1;
     if (maxRetry > 0) {
       port += 1;
-      console.info('[KS] Port %d is in used, trying port %d', port - 1, port);
+      log.warn('Port %d is in used, trying port %d', port - 1, port);
       doListen();
     } else {
-      console.info('[KS] Retry to much time(%d)', maxRetry);
+      log.warn('Retry to much time(%d)', maxRetry);
     }
   } else {
-    console.info('[KS] Undandle error', err);
+    log.error('Undandle error', err);
   }
 });
 

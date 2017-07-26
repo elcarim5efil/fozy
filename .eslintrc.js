@@ -20,6 +20,7 @@ module.exports = {
         ],
         "class-methods-use-this": [
           "warn"
-        ]
+      ],
+        'no-param-reassign': ["error", { "props": false }]
     }
 };

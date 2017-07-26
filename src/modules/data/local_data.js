@@ -1,6 +1,7 @@
 import json5 from 'json5';
 import _ from '../../util/extend';
 import fs from '../../promise/fs';
+import { log } from '../../util';
 
 export default class LocalData {
   constructor(option) {
@@ -29,7 +30,7 @@ export default class LocalData {
         const file = await fs.readFileAsync(path, 'utf-8');
         json = json5.parse(file);
       } catch (err) {
-        console.info(`[KS] data parse error, check file: ${jsonPath}`);
+        log.info(`[KS] data parse error, check file: ${jsonPath}`);
       }
     }
     return json;

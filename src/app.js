@@ -8,6 +8,7 @@ import logger from 'koa-logger';
 import path from 'path';
 
 import router from './router';
+import { log } from './util';
 
 const bodyparser = KoaBodyparser();
 const app = new Koa();
@@ -39,14 +40,13 @@ app.use(async (ctx, next) => {
   const start = new Date();
   await next();
   const ms = new Date() - start;
-  console.log(`[KS] ${ctx.method} ${ctx.url} - ${ms}ms`);
+  log.info(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
 app.use(router.routes(), router.allowedMethods());
 
 app.on('error', (err, ctx) => {
-  console.log(err);
-  logger.error('[KS] Server error', err, ctx);
+  log.error('Server error', err, ctx);
 });
 
 module.exports = app;

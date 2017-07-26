@@ -1,13 +1,23 @@
-
-
 import path from 'path';
 import _ from '../../util/extend';
+import { log } from '../../util';
 import { SyncData } from '../data';
 
 const root = fozy.root;
 const config = fozy.config;
 const templateRoot = path.join(root, config.template.root || '');
 
+const getPathByUrl = function getPathByUrl(url) {
+  let res = -1;
+  _.which(config.pages, (item) => {
+    if (item.url === url) {
+      res = item.path;
+      return true;
+    }
+    return false;
+  });
+  return res;
+};
 
 export default class Engine {
   constructor(option) {
@@ -31,7 +41,7 @@ export default class Engine {
 
   getRouter() {
     return async (ctx, next) => {
-      const tplPath = this.getPathByUrl(_.removeQueryString(ctx.url));
+      const tplPath = getPathByUrl(_.removeQueryString(ctx.url));
 
       if (!this.isTplFileExist(tplPath)) {
         return next();
@@ -39,30 +49,22 @@ export default class Engine {
 
       const json = await this.getSyncData(ctx, tplPath);
       await this.respondHtml(ctx, json, tplPath);
+      return null;
     };
   }
 
-  getPathByUrl(url) {
-    let res = -1;
-    _.which(config.pages, (item) => {
-      if (item.url === url) {
-        res = item.path;
-        return true;
-      }
-    });
-    return res;
-  }
 
   isTplFileExist(tplPath) {
     return tplPath !== -1 && _.isFileExist(path.join(templateRoot, tplPath));
   }
 
   async getSyncData(ctx, tplPath) {
-    return await new SyncData({
+    const data = await new SyncData({
       ctx,
       fileType: this.fileType,
       path: _.removePostfix(tplPath),
     }).getData();
+    return data;
   }
 
   async respondHtml(ctx, json, tplPath) {
@@ -74,8 +76,9 @@ export default class Engine {
     try {
       result = await this.engine.render(tplPath, json || {});
     } catch (err) {
-      result.html = '[KS] render error, please check your template files and json files';
-      console.error('[KS] render error, please check your template files and json files');
+      const errorText = '[KS] render error, please check your template files and json files';
+      result.html = errorText;
+      log.error(errorText);
     }
 
     if (/(^>>>\sABORTED!\s<<<).*/.test(result.output)) {

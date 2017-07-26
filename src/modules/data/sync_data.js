@@ -1,6 +1,6 @@
 import _path from 'path';
 import qs from 'querystring';
-// import _ from '../../util/extend';
+import { log } from '../../util';
 
 import JSONProcessor from '../../util/json.processor';
 import LocalData from './local_data';
@@ -31,7 +31,7 @@ export default class MockData {
       }).getData();
       data = Object.assign({}, globalData, pageData);
     } catch (err) {
-      console.info(`[KS] mock data parse error, check your template .json files, url: ${this.ctx.url}`);
+      log.error(`Mock data parse error, check your template .json files, url: ${this.ctx.url}`);
     }
 
     return this.processData(data);

@@ -1,5 +1,3 @@
-
-
 const fs = require('../../lib/promise/fs.js');
 const handlebars = require('handlebars');
 const path = require('path');

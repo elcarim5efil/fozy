@@ -1,11 +1,11 @@
+import { log } from '../util';
 
-
-const req = require('../../lib//promise/req.js');
+const req = require('../../lib//promise/req');
 
 const neiHost = 'https://nei.netease.com';
 const specType = 0;
 
-const loader = async (key, cb) => {
+const loader = async (key) => {
   const url = `${neiHost}/api/projectres/?key=${encodeURIComponent(key)}&spectype=${specType}`;
   try {
     const json = await req({
@@ -18,8 +18,9 @@ const loader = async (key, cb) => {
       return data.result;
     }
   } catch (err) {
-    console.log('NEI configuration download error: ', err);
+    log.error('NEI configuration download error: ', err);
   }
+  return null;
 };
 
 module.exports = loader;

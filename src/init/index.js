@@ -1,5 +1,6 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { log } from '../util';
 
 const root = fozy.root;
 
@@ -17,9 +18,9 @@ const init = {
     fs.exists(confTar, (data, err) => {
       if (!err && !data) {
         copyFile(confSrc, confTar);
-        console.info('[fozy] fozy.config.js created');
+        log.info('fozy.config.js created');
       } else {
-        console.info('[fozy] fozy.config.js already exists');
+        log.warn('fozy.config.js already exists');
       }
     });
   },

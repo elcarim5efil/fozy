@@ -2,6 +2,7 @@
 'use strict';
 const path = require('path');
 const Cli = require('../lib/cli');
+const log = require('../lib/util').log;
 const fs = require('fs');
 let cli = new Cli();
 let isReady2RunServer;
@@ -49,10 +50,10 @@ function runInWatchMode(){
 function runInProxyMode(arg){
     readyToRunServer();
     if(isReady2RunServer) {
-        console.log(`using proxy config: ${arg}`);
+        log.info(`using proxy config: ${arg}`);
         let proxy = global.fozy.config.mock.proxyMap[arg];
         if(proxy){
-            console.log('proxy: ', arg);
+            log.info('proxy: ', arg);
             global.fozy.config.mock.proxy = proxy;
         }
     }
@@ -97,7 +98,7 @@ function readyToRunServer(){
     let fozyConfigPath = path.join(global.fozy.root, 'fozy.config.js');
 
     if( !isFileExist(fozyConfigPath) ) {
-        console.log('Cannot find fozy.config.js, please make sure the file exists.');
+        log.error('Cannot find fozy.config.js, please make sure the file exists.');
         return false;
     }
 
@@ -105,7 +106,7 @@ function readyToRunServer(){
         global.fozy.config = require(fozyConfigPath);
         isReady2RunServer = true;
     } catch(e) {
-        console.log('Fail reading fozy.config.js, please check your file.');
+        log.error('Fail reading fozy.config.js, please check your file.');
         return false;
     }
     return true;
