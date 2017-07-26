@@ -1,3 +1,7 @@
 node_modules
 src
 *.log.*
+getToWork.ps1
+sample
+.babelrc
+.gitignore

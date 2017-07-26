@@ -1,31 +1,34 @@
-
-'use strict';
-
 import { AsyncData } from '../../data';
-const config = fozy.__config;
+
+const config = fozy.config;
+
+const isEmptyData = function isEmptyData(obj) {
+  return Object.keys(obj).length === 0;
+};
 
 export default class LocalMock {
-    constructor() {
+  constructor() {
+    this.defaultData = config.mock.api.defaultData;
+  }
+  getMocker() {
+    this.mock = async (ctx, next) => {
+      try {
+        let data = await new AsyncData(ctx).getData();
+        if (isEmptyData(data) && !this.defaultData) {
+          return next();
+        }
+        if (this.defaultData) {
+          data = this.defaultData;
+        }
 
-    }
+        ctx.body = data;
+        ctx.type = 'json';
+      } catch (err) {
+        return next();
+      }
+      return null;
+    };
 
-    getMocker() {
-        var mock = async (ctx, next) => {
-            try {
-                let data = await new AsyncData(ctx).getData();
-                if( this.isEmptyData(data) ) {
-                    data = config.mock.api.defaultData;
-                }
-                ctx.body = data;
-                ctx.type = 'json';
-            } catch(err) {
-                return next();
-            }
-        };
-        return mock;
-    }
-
-    isEmptyData(obj) {
-        return Object.keys(obj).length === 0;
-    }
+    return this.mock;
+  }
 }
