@@ -14,16 +14,21 @@ export default class LocalMock {
     this.mock = async (ctx, next) => {
       try {
         let data = await new AsyncData(ctx).getData();
-        if (isEmptyData(data)) {
+        if (isEmptyData(data) && !this.defaultData) {
+          return next();
+        }
+        if (this.defaultData) {
           data = this.defaultData;
         }
+
         ctx.body = data;
         ctx.type = 'json';
       } catch (err) {
         return next();
       }
-      return undefined;
+      return null;
     };
+
     return this.mock;
   }
 }
