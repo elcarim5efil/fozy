@@ -1,18 +1,15 @@
+const request = require('request');
 
-'use strict';
-
-const _request = require('request');
-
-let req = async function(option){
-    return new Promise(function(resolve, reject){
-        _request(option, function(err, data){
-            if(err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
-        })
+const req = async function req(option) {
+  return new Promise(((resolve, reject) => {
+    request(option, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
     });
+  }));
 };
 
 module.exports = req;

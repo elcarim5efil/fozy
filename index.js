@@ -1,46 +1,55 @@
-
-'use strict';
-
 require('babel-polyfill');
 
 const app = require('./lib/app');
 const path = require('path');
-const config = require(path.join(fozy.__root, 'fozy.config')),
-    __root = fozy.__root;
 
-var listener,
-    MAX_RETRY = config.maxRetry || 10,
-    port = config.port || 3000,
-    watch = false;
+const configPath = path.join(fozy.root, 'fozy.config');
+const log = require('./lib/util/log').default;
 
-process.on('uncaughtException', function(err){
-    if(err.code === 'EADDRINUSE'){
-        if(--MAX_RETRY>0) {
-            console.log('[KS] Port %d is in used, trying port %d', port, ++port);
-            doListen();
-        } else {
-            console.log('[KS] Retry to much time(%d)', MAX_RETRY);
-        }
+/* eslint-disable */
+const config = require(configPath);
+/* eslint-enable */
+
+const MAX_RETRY = config.maxRetry || 10;
+
+let listener;
+let port = config.port || 3000;
+let maxRetry = MAX_RETRY;
+
+function doListen() {
+  listener = app.listen(port, () => {
+    log.info('Server is listening to port %d', listener.address().port);
+  });
+  return listener;
+}
+
+process.on('uncaughtException', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    maxRetry -= 1;
+    if (maxRetry > 0) {
+      port += 1;
+      log.warn('Port %d is in used, trying port %d', port - 1, port);
+      doListen();
     } else {
-        console.log('[KS] Undandle error', err);
+      log.warn('Retry to much time(%d)', maxRetry);
     }
+  } else {
+    log.error('Undandle error', err);
+  }
 });
 
-function doListen(){
-    return listener = app.listen(port, function(){
-        console.log('[KS] Koa server is listening to port %d', listener.address().port);
-    });
-};
+/* eslint-disable */
+var watch = false;
+/* eslint-enable */
 
-var entry = {
-    run: function(options){
-        if(!listener ) {
-            watch = options.watch;
-            return doListen();
-        } else {
-            return listener;
-        }
+const entry = {
+  run(options) {
+    if (!listener) {
+      watch = options.watch;
+      return doListen();
     }
-}
+    return listener;
+  },
+};
 
 module.exports = entry;

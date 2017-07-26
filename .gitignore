@@ -1,4 +1,6 @@
 .git
 node_modules
+lib
 sample2
 *.log.*
+getToWork.ps1

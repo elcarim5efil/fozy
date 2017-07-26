@@ -36,6 +36,9 @@ var config = {
         {name: '示例1', url: '/demo', path: './pages/demo.ftl'},
         {name: '示例2', url: '/demo2', path: './pages/demo2.ftl'},
         {name: '示例3', url: '/demo3', path: './pages/demo3.html'},
+    ],
+    plugins: [
+        'fozy-mcss'
     ]
 
 };

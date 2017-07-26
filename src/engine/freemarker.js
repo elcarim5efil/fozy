@@ -1,25 +1,20 @@
-
-'use strict';
-
 import Freemarker from 'freemarker.js';
 
 module.exports = (option) => {
-    let fm = new Freemarker(option);
-    return {
-        engine: fm,
-        render: async (tpl, json) => {
-            return new Promise(function(resolve, reject) {
-                fm.render(tpl, json, function(err, html, output){
-                    if(err) {
-                        reject(err);
-                    } else {
-                        resolve({
-                            html: html,
-                            output: output,
-                        });
-                    }
-                });
-            });
+  const fm = new Freemarker(option);
+  return {
+    engine: fm,
+    render: async (tpl, json) => new Promise(((resolve, reject) => {
+      fm.render(tpl, json, (err, html, output) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve({
+            html,
+            output,
+          });
         }
-    }
-}
+      });
+    })),
+  };
+};

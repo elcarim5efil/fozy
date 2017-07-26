@@ -1,29 +1,29 @@
+import fs from 'fs';
+import path from 'path';
+import { log } from '../util';
 
-'use strict';
+const root = fozy.root;
 
-const fs = require('fs');
-const path = require('path');
-const __root = fozy.__root;
+const copyFile = function copyFile(src, tar) {
+  fs.createReadStream(src).pipe(fs.createWriteStream(tar));
+};
 
-let init = {
-    run() {
-        this.makeConf();
-    },
-    makeConf() {
-        let confSrc = path.join(__dirname, '../../sample/fozy.config.js');
-        let confTar = path.join(__root, 'fozy.config.js');
-        fs.exists(confTar, function(data, err){
-            if(!!!err && !data) {
-                copyFile(confSrc, confTar);
-                console.log('[fozy] fozy.config.js created');
-            } else {
-                console.log('[fozy] fozy.config.js already exists');
-            }
-        });
-    }
-}
+const init = {
+  run() {
+    this.makeConf();
+  },
+  makeConf() {
+    const confSrc = path.join(__dirname, '../../sample/fozy.config.js');
+    const confTar = path.join(root, 'fozy.config.js');
+    fs.exists(confTar, (data, err) => {
+      if (!err && !data) {
+        copyFile(confSrc, confTar);
+        log.info('fozy.config.js created');
+      } else {
+        log.warn('fozy.config.js already exists');
+      }
+    });
+  },
+};
 
-function copyFile(src, tar) {
-    fs.createReadStream(src).pipe(fs.createWriteStream(tar));
-}
 module.exports = init;
