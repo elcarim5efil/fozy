@@ -3,36 +3,36 @@ import _ from '../../util/extend';
 import fs from '../../promise/fs';
 import { log } from '../../util';
 
-export default class LocalData {
-  constructor(option) {
-    this.path = option.path;
-    this.postfix = option.postfix || '.json';
-    this.body = option.body || {};
-    this.queryStr = option.queryStr || {};
-  }
-
-  async getData() {
-    let json = {};
-    const jsonPath = this.path + this.postfix;
-    const json5Path = `${this.path}.json5`;
-    const isJsonFileExist = _.isFileExist(jsonPath);
-    const isJson5FileExist = _.isFileExist(json5Path);
-
-    let path = null;
-    if (isJson5FileExist) {
-      path = json5Path;
-    } else if (isJsonFileExist) {
-      path = jsonPath;
+export default {
+  async get(path, opt = {}) {
+    if (!opt.postfixs) {
+      opt.postfixs = [
+        '.json5',
+        '.json',
+      ];
     }
 
-    if (path) {
+    let json = null;
+    let jsonPath = null;
+
+    opt.postfixs.some((postfix) => {
+      const filePath = path + postfix;
+      if (_.isFileExist(filePath)) {
+        jsonPath = filePath;
+        return true;
+      }
+      return false;
+    });
+
+    if (jsonPath) {
       try {
-        const file = await fs.readFileAsync(path, 'utf-8');
+        const file = await fs.readFileAsync(jsonPath, 'utf-8');
         json = json5.parse(file);
       } catch (err) {
-        log.info(`[KS] data parse error, check file: ${jsonPath}`);
+        log.info(`Data parse error, check file: ${jsonPath}`);
       }
     }
+
     return json;
-  }
-}
+  },
+};

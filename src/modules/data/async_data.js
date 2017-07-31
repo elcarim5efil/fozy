@@ -3,6 +3,7 @@ import qs from 'querystring';
 import _ from '../../util/extend';
 import JSONProcessor from '../../util/json.processor';
 import LocalData from './local_data';
+import { log } from '../../util';
 
 const rootPath = fozy.root;
 const config = fozy.config;
@@ -15,33 +16,31 @@ const getFilePath = function getFilePath(ctx) {
   return path.join(root, url, fileName);
 };
 
-export default class AsyncData {
-  constructor(ctx) {
-    this.ctx = ctx;
-    this.filePath = getFilePath(ctx) || '';
-    this.data = {};
-  }
+const processData = (filePath, data, ctx) => {
+  const proc = new JSONProcessor({
+    module: `${filePath}.js`,
+    preStringify: false,
+  });
 
-  async getData() {
-    this.data = await new LocalData({
-      path: this.filePath,
-    }).getData();
+  return proc.process(
+    Object.assign({}, data || {}),
+    ctx.request.body,
+    qs.parse(ctx.url.split('?')[1]),
+    ctx,
+  );
+};
 
-    return this.processData(this.data, this.ctx);
-  }
-
-  processData(data, ctx) {
-    const proc = new JSONProcessor({
-      module: `${this.filePath}.js`,
-      preStringify: false,
-    });
-
-    return proc.process(
-      data || {},
-      ctx.request.body,
-      qs.parse(ctx.url.split('?')[1]),
-      ctx,
-    );
-  }
-}
+export default {
+  async get(ctx) {
+    const filePath = getFilePath(ctx) || '';
+    let data;
+    try {
+      data = await LocalData.get(filePath);
+      data = processData(filePath, data, ctx);
+    } catch (e) {
+      log.error(`Async Mock data parse error, check your template .json files, url: ${ctx.url}`);
+    }
+    return data;
+  },
+};
 

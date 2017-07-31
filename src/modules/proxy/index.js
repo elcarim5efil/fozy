@@ -1,5 +1,5 @@
 import Proxy from 'http-proxy';
-import { log } from '../../../util';
+import { log } from '../../util';
 
 const proxyConf = fozy.config.mock.proxy;
 
@@ -20,7 +20,7 @@ module.exports = (_option) => {
     }
   });
 
-  const doProxy = (ctx) => {
+  return (ctx) => {
     const req = ctx.req;
     const res = ctx.res;
     ctx.response = false;
@@ -29,8 +29,5 @@ module.exports = (_option) => {
     } catch (err) {
       log.error('proxy error ', err);
     }
-  };
-  return async (ctx) => {
-    doProxy(ctx);
   };
 };

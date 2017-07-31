@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 'use strict';
+
+process.env.NODE_ENV = 'production';
+
 const path = require('path');
 const Cli = require('../lib/cli');
 const log = require('../lib/util').log;

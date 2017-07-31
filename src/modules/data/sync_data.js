@@ -4,51 +4,42 @@ import { log } from '../../util';
 
 import JSONProcessor from '../../util/json.processor';
 import LocalData from './local_data';
-import GlobalSyncData from './global_sync_data';
 
 const root = fozy.root;
 const config = fozy.config;
+const globalJsonPath = _path.join(root, config.template.mock, '__global/data');
 
 
-export default class MockData {
-  constructor(option) {
-    this.ctx = option.ctx || {};
-    this.fileType = option.fileType || '.json';
-    this.path = option.path || '';
-    this.pageDataPath = _path.join(root, config.template.mock || '', (this.path || this.ctx.url));
-  }
+const processData = (path, data, ctx) => {
+  const proc = new JSONProcessor({
+    module: `${path}.js`,
+    preStringify: true,
+  });
 
-  getData() {
-    return this.data || this.updateData();
-  }
+  return proc.process(
+    Object.assign({}, data || {}),
+    ctx.request.body,
+    qs.parse(ctx.url.split('?')[1]),
+    ctx,
+  );
+};
 
-  async updateData() {
+export default {
+  async get(option) {
+    const ctx = option.ctx || {};
+    const path = option.path || '';
+    const pageDataPath = _path.join(root, config.template.mock || '', (path || ctx.url));
+
     let data;
     try {
-      const globalData = await new GlobalSyncData().getData();
-      const pageData = await new LocalData({
-        path: this.pageDataPath,
-      }).getData();
+      const globalData = await LocalData.get(globalJsonPath);
+      const pageData = await LocalData.get(pageDataPath);
       data = Object.assign({}, globalData, pageData);
+      data = processData(path, data, ctx);
     } catch (err) {
-      log.error(`Mock data parse error, check your template .json files, url: ${this.ctx.url}`);
+      log.error(`Sync Mock data parse error, check your template .json files, url: ${ctx.url}`);
     }
 
-    return this.processData(data);
-  }
-
-  processData(data) {
-    const ctx = this.ctx;
-    const proc = new JSONProcessor({
-      module: `${this.path}.js`,
-      preStringify: true,
-    });
-
-    return proc.process(
-      data,
-      ctx.request.body,
-      qs.parse(ctx.url.split('?')[1]),
-      ctx,
-    );
-  }
-}
+    return data;
+  },
+};
