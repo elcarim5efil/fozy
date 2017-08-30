@@ -4,3 +4,4 @@ lib
 sample2
 *.log.*
 getToWork.ps1
+package-lock.json

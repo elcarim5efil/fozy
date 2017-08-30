@@ -1,3 +1,4 @@
+import https from 'https';
 import proxy from '../modules/proxy';
 import { isPage } from '../util';
 
@@ -8,17 +9,18 @@ export default function () {
   };
   const option = {
     target: config.target,
+    agent: https.globalAgent,
     headers,
   };
 
   if (config.host) {
-    option.host = config.host;
+    option.headers.host = config.host;
   }
 
   const doProxy = proxy(option);
 
   return async (ctx, next) => {
-    if (isPage(ctx.url)) {
+    if (isPage(ctx)) {
       return next();
     }
     return doProxy(ctx, next);
