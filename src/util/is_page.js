@@ -1,7 +1,12 @@
-export default function isPage(url) {
+export default function isPage(ctx) {
   let result = false;
+  if (String(ctx.method).toLowerCase() !== 'get') {
+    return false;
+  }
   fozy.config.pages.some((page) => {
-    if (page.url === url) {
+    const url = ctx.url.split('?')[0];
+    const pageUrl = page.url.split('?')[0];
+    if (pageUrl === url) {
       result = true;
       return true;
     }
@@ -9,4 +14,3 @@ export default function isPage(url) {
   });
   return result;
 }
-

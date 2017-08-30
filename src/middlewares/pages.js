@@ -8,9 +8,11 @@ const templateRoot = path.join(root, config.template.root || '');
 
 const getPathByUrl = function getPathByUrl(url) {
   let res = -1;
-  extend.which(config.pages, (item) => {
-    if (item.url === url) {
-      res = item.path;
+  extend.which(config.pages, (page) => {
+    const pageUrl = page.url.split('?')[0];
+    const pureUrl = url.split('?')[0];
+    if (pageUrl === pureUrl) {
+      res = page.path;
       return true;
     }
     return false;
@@ -64,7 +66,7 @@ export default function (option = {}) {
     }
   }
   return async (ctx, next) => {
-    if (!isPage(ctx.url)) {
+    if (!isPage(ctx)) {
       return next();
     }
     const tplPath = getPathByUrl(extend.removeQueryString(ctx.url));

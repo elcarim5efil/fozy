@@ -1,6 +1,7 @@
 import path from 'path';
 import handlebars from 'handlebars';
 import fs from '../promise/fs';
+import isFozy from '../util/is_fozy';
 
 const root = fozy.root;
 const config = fozy.config;
@@ -14,8 +15,11 @@ export default class IndexPage {
 
   getRouter() {
     const indexPage = async (ctx, next) => {
-      const res = await this.respondHtml(ctx, next);
-      return res;
+      if (ctx.method.toLowerCase() === 'get' && isFozy(ctx.url)) {
+        const res = await this.respondHtml(ctx, next);
+        return res;
+      }
+      return next();
     };
     return indexPage;
   }
@@ -78,4 +82,3 @@ export default class IndexPage {
     return pages;
   }
 }
-

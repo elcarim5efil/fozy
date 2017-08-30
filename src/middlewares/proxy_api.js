@@ -1,6 +1,6 @@
 import https from 'https';
 import proxy from '../modules/proxy';
-import { isPage } from '../util';
+import { isPage, isFozy } from '../util';
 
 export default function () {
   const config = fozy.config.mock.proxy;
@@ -20,7 +20,7 @@ export default function () {
   const doProxy = proxy(option);
 
   return async (ctx, next) => {
-    if (isPage(ctx)) {
+    if (isPage(ctx) || isFozy(ctx.url)) {
       return next();
     }
     return doProxy(ctx, next);

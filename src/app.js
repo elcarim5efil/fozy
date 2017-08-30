@@ -5,6 +5,7 @@ import path from 'path';
 import router from './router';
 import { log } from './util';
 import { logger, localApi, proxyApi, pages } from './middlewares';
+import IndexPage from './router/index_page';
 
 const bodyparser = KoaBodyparser();
 const app = new Koa();
@@ -27,6 +28,8 @@ config.resource.forEach((item) => {
 // logger
 app.use(logger());
 
+app.use(new IndexPage().getRouter());
+
 if (proxyConf) {
   log.info(`Using proxy api: ${proxyConf.target}`);
   app.use(proxyApi());
@@ -36,9 +39,9 @@ if (proxyConf) {
   app.use(localApi());
 }
 
-app.use(pages());
-
 app.use(router.routes(), router.allowedMethods());
+
+app.use(pages());
 
 app.on('error', (err, ctx) => {
   log.error('Server error', err, ctx);
