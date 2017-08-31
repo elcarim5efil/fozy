@@ -9,9 +9,13 @@ export default function () {
   };
   const option = {
     target: config.target,
-    agent: https.globalAgent,
+    // agent: https.globalAgent,
     headers,
   };
+
+  if (/^https/.test(config.target)) {
+    option.agent = https.globalAgent;
+  }
 
   if (config.host) {
     option.headers.host = config.host;

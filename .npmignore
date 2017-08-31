@@ -8,3 +8,4 @@ sample2
 .gitignore
 .eslintignore
 .eslint.js
+package-lock.json
