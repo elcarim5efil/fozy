@@ -1,9 +1,8 @@
 import path from 'path';
 import qs from 'querystring';
 import _ from '../../util/extend';
-import JSONProcessor from '../../util/json.processor';
 import LocalData from './local_data';
-import { log } from '../../util';
+import { log, JSONProcessor } from '../../util';
 
 const rootPath = fozy.root;
 const config = fozy.config;
@@ -43,4 +42,3 @@ export default {
     return data;
   },
 };
-

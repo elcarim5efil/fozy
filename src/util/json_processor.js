@@ -46,4 +46,4 @@ class JSONProcessor {
   }
 }
 
-module.exports = JSONProcessor;
+export default JSONProcessor;

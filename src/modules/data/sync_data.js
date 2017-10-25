@@ -1,8 +1,6 @@
 import _path from 'path';
 import qs from 'querystring';
-import { log } from '../../util';
-
-import JSONProcessor from '../../util/json.processor';
+import { log, JSONProcessor } from '../../util';
 import LocalData from './local_data';
 
 const root = fozy.root;
@@ -10,7 +8,7 @@ const config = fozy.config;
 const globalJsonPath = _path.join(root, config.template.mock, '__global/data');
 
 
-const processData = (path, data, ctx) => {
+function processData(path, data, ctx) {
   const proc = new JSONProcessor({
     module: `${path}.js`,
     preStringify: true,
@@ -22,7 +20,7 @@ const processData = (path, data, ctx) => {
     qs.parse(ctx.url.split('?')[1]),
     ctx,
   );
-};
+}
 
 export default {
   async get(option) {
@@ -31,13 +29,34 @@ export default {
     const pageDataPath = _path.join(root, config.template.mock || '', (path || ctx.url));
 
     let data;
+    let globalData;
     try {
-      const globalData = await LocalData.get(globalJsonPath);
+      globalData = await LocalData.get(globalJsonPath);
+    } catch (err) {
+      log.error(`Sync global mock data parse error, check your template .json file, url: ${globalJsonPath}.json`);
+    }
+
+    try {
+      globalData = processData(globalJsonPath, globalData, ctx);
+    } catch (err) {
+      log.error(`Sync global mock data parse error, check your template .js file, url: ${globalJsonPath}.js`);
+    }
+
+    try {
       const pageData = await LocalData.get(pageDataPath);
-      data = Object.assign({}, globalData, pageData);
+      if (!pageData.__disableGlobalData) {    // eslint-disable-line
+        data = Object.assign({}, globalData, pageData);
+      } else {
+        data = Object.assign({}, pageData);
+      }
+    } catch (err) {
+      log.error(`Sync mock data parse error, check your template .json file, url: ${path}.json`);
+    }
+
+    try {
       data = processData(path, data, ctx);
     } catch (err) {
-      log.error(`Sync Mock data parse error, check your template .json files, url: ${ctx.url}`);
+      log.error(`Sync mock data parse error, check your template .js file, url: ${path}.js`);
     }
 
     return data;
