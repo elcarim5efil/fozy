@@ -10,6 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "./node_modules/.bin/babel -d lib/ src/ --watch",
     "build": "./node_modules/.bin/babel -d lib/ src/",
+    "prepublishOnly": "rm -rf lib && npm run build",
     "lint": "eslint ./ --fix"
   },
   "author": "elcarim5efil",
