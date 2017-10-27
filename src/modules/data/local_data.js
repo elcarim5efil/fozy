@@ -24,12 +24,14 @@ export default {
       return false;
     });
 
+
     if (jsonPath) {
       try {
         const file = await fs.readFileAsync(jsonPath, 'utf-8');
         json = json5.parse(file);
       } catch (err) {
         log.info(`Data parse error, check file: ${jsonPath}`);
+        return false;
       }
     }
 
