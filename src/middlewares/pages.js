@@ -68,7 +68,6 @@ export default function (config, option = {}) {
       return next();
     }
     const tplPath = getPathByUrl(extend.removeQueryString(ctx.url));
-    console.log(templateRoot, tplPath, isTplFileExist(tplPath));
     if (!isTplFileExist(tplPath)) {
       return next();
     }
