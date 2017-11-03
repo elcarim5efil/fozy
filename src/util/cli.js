@@ -1,11 +1,8 @@
-
-
 class Cli {
   constructor() {
     this.handlers = [];
     this.maps = {};
     this.default = '-h';
-    this.normal = function normal() {};
   }
 
   on(argvs, handler) {
@@ -14,17 +11,13 @@ class Cli {
     }));
   }
 
-  end() {
-    // abstract
-  }
-
-  normal() {
-    // abstract
+  onEnd(callback) {
+    this.onEndCallback = callback;
   }
 
   parse(argvs) {
     if (argvs.length === 0) {
-      this.normal();
+      this.onEndCallback();
       return;
     }
 
@@ -37,16 +30,22 @@ class Cli {
           i += 1;
           arg = argvs[i];
         }
-        handler.call(null, arg);
+        const result = handler.call(null, arg);
+        if (result === false) {
+          return;
+        }
         i += 1;
       } else {
-        console.info(`${argvs[i]} is invalid, please use -h or --help for help`);
+        console.info(`${argvs[i]} is invalid, please use -h or --help for help`);   // eslint-disable-line
         this.parse(['-h']);
         return;
       }
     }
-    this.end();
+    this.onEndCallback();
   }
 }
 
-module.exports = Cli;
+export default Cli;
+export {
+  Cli,
+};

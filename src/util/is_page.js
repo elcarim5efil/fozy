@@ -1,9 +1,9 @@
-export default function isPage(ctx) {
+export default function isPage(config, ctx) {
   let result = false;
   if (String(ctx.method).toLowerCase() !== 'get') {
     return false;
   }
-  fozy.config.pages.some((page) => {
+  config.pages.some((page) => {
     const url = ctx.url.split('?')[0];
     const pageUrl = page.url.split('?')[0];
     if (pageUrl === url) {

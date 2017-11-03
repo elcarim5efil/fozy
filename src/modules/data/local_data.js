@@ -3,7 +3,10 @@ import _ from '../../util/extend';
 import fs from '../../promise/fs';
 import { log } from '../../util';
 
-export default {
+export default class LocalData {
+  constructor(config) {
+    this.config = config;
+  }
   async get(path, opt = {}) {
     if (!opt.postfixs) {
       opt.postfixs = [
@@ -36,5 +39,5 @@ export default {
     }
 
     return json;
-  },
-};
+  }
+}

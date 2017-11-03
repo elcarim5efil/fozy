@@ -1,23 +1,22 @@
 import { AsyncData } from '../modules/data';
 import { isPage, isFozy } from '../util';
 
-const config = fozy.config;
 const isEmptyData = function isEmptyData(obj) {
   return Object.keys(obj).length === 0;
 };
 
-export default function () {
-  const defaultData = config.mock.api.defaultData;
+export default function localApi(config) {
+  const { defaultData } = config.mock.api;
   return async (ctx, next) => {
-    if (isPage(ctx) || isFozy(ctx.url)) {
+    if (isPage(config, ctx) || isFozy(ctx.url)) {
       return next();
     }
     try {
-      let data = await AsyncData.get(ctx);
-      if (isEmptyData(data) && !defaultData) {
-        return next();
-      }
-      if (defaultData) {
+      let data = await new AsyncData(config).get(ctx);
+      if (isEmptyData(data)) {
+        if (!defaultData) {
+          return next();
+        }
         data = defaultData;
       }
 

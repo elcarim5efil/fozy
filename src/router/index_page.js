@@ -3,11 +3,10 @@ import handlebars from 'handlebars';
 import fs from '../promise/fs';
 import isFozy from '../util/is_fozy';
 
-const root = fozy.root;
-const config = fozy.config;
-
 export default class IndexPage {
-  constructor() {
+  constructor(config) {
+    this.root = config.root;
+    this.config = config;
     this.pageList = null;
     this.html = null;
     this.templatePath = path.join(__dirname, '../../templates/index.hbs');
@@ -29,6 +28,7 @@ export default class IndexPage {
   }
 
   async getPageList() {
+    const { config } = this;
     if (!this.pageList) {
       if (config.pages && config.pages.length > 0) {
         this.pageList = config.pages;
@@ -59,6 +59,7 @@ export default class IndexPage {
   }
 
   async createPageList() {
+    const { config } = this;
     let p;
     let files = [];
     let temp;

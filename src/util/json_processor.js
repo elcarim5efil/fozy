@@ -15,7 +15,6 @@ class JSONProcessor {
   process(json, ...args) {
     const proc = this.processor;
     let res = Object.assign({}, json);
-
     if (typeof proc === 'function') {
       res = proc(json, ...args);
     }
@@ -27,9 +26,9 @@ class JSONProcessor {
   stringify(json) {
     const res = Object.assign({}, json);
     if (!this.preStringify
-    /*eslint-disable*/
+    /* eslint-disable */
             || !json || !json.__json || json.__json.length === 0) {
-    /*eslint-enable*/
+    /* eslint-enable */
       return res;
     }
 
@@ -40,7 +39,7 @@ class JSONProcessor {
         res[item[key]] = JSON.stringify(json[key]);
       }
     });
-    /*eslint-enable*/
+    /* eslint-enable */
 
     return res;
   }

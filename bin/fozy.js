@@ -3,80 +3,51 @@
 
 process.env.NODE_ENV = 'production';
 
-const path = require('path');
-const Cli = require('../lib/cli');
-const log = require('../lib/util').log;
-const fs = require('fs');
+const Cli = require('../lib/util/cli').default;
+const log = require('../lib/util/log');
+const Fozy = require('../index');
 let cli = new Cli();
-let isReady2RunServer;
-
-setFozyObj();
+const config = {};
 
 cli.on(['-v', '--version'], printVersion);
 cli.on(['-h', '--help'], printHelp);
-cli.on(['-w', '--watch'], runInWatchMode);
-cli.on(['-p', '--proxy'], runInProxyMode);
+cli.on(['-w', '--watch'], initWatchMode);
+cli.on(['-p', '--proxy'], initProxyMode);
 cli.on(['--init'], initFozyConfigJSFile);
 cli.on(['--nei'], runNeiSetup);
+cli.onEnd(function() {
+  new Fozy(config);
+});
+cli.parse(process.argv.slice(2));
 
-cli.normal = function(){
-    readyToRunServer();
-    doRunServer();
-};
-
-cli.end = function runServer(){
-    doRunServer();
-};
-
-function doRunServer(){
-    if(isReady2RunServer) {
-        var app = require('../index');
-        app.run({});
-    }
+function initWatchMode() {
+  Object.assign(config, {
+    watch: true
+  });
 }
 
-function setFozyObj(){
-    if(!!!global.fozy) {
-        let root = path.join(process.cwd());
-        global.fozy = {
-            root: root,
-            dev: {},
-        }
-    }
-}
-
-function runInWatchMode(){
-    readyToRunServer();
-    global.fozy.dev.watch = true;
-}
-
-function runInProxyMode(arg){
-    readyToRunServer();
-    if(isReady2RunServer) {
-        log.info(`using proxy config: ${arg}`);
-        let proxy = global.fozy.config.mock.proxyMap[arg];
-        if(proxy){
-            log.info('proxy: ', arg);
-            global.fozy.config.mock.proxy = proxy;
-        }
-    }
+function initProxyMode(proxyName){
+  Object.assign(config, {
+    proxyName: proxyName
+  });
 }
 
 function initFozyConfigJSFile(){
-    var init = require('../lib/init');
-    isReady2RunServer = false;
-    init.run();
+  var init = require('../lib/init');
+  init.run();
+  return false;
 }
 
 function runNeiSetup(arg){
-    let nei = require('../lib/nei');
-    isReady2RunServer = false;
-    nei.build(arg);
+  let nei = require('../lib/nei');
+  nei.build(arg);
+  return false;
 }
 
 function printVersion(){
-    const pack = require('../package.json');
-    console.log(`v${pack.version}`);
+  const pack = require('../package.json');
+  console.log(`v${pack.version}`);
+  return false;
 }
 
 function printHelp(){
@@ -91,36 +62,5 @@ Options:
   --init\t\t\tinitialize the project, so far, create fozy.config.js
 
 Please visit Github repository https://github.com/elcarim5efil/fozy for more information.`);
+  return false;
 }
-
-function readyToRunServer(){
-    if(global.fozy.config) {
-        return true;
-    }
-
-    let fozyConfigPath = path.join(global.fozy.root, 'fozy.config.js');
-
-    if( !isFileExist(fozyConfigPath) ) {
-        log.error('Cannot find fozy.config.js, please make sure the file exists.');
-        return false;
-    }
-
-    try{
-        global.fozy.config = require(fozyConfigPath);
-        isReady2RunServer = true;
-    } catch(e) {
-        log.error('Fail reading fozy.config.js, please check your file.');
-        return false;
-    }
-    return true;
-}
-
-function isFileExist(path) {
-    try {
-        return fs.existsSync(path);
-    } catch (e) {
-        return false;
-    }
-}
-
-cli.parse(process.argv.slice(2));
