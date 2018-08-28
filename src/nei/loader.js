@@ -1,6 +1,6 @@
 import { log } from '../util';
 
-const req = require('../../lib//promise/req');
+const req = require('../../lib/promise/req');
 
 const neiHost = 'https://nei.netease.com';
 const specType = 0;
