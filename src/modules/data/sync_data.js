@@ -54,7 +54,7 @@ export default {
         throw new Error();
       }
     } catch (err) {
-      log.error(`Sync mock data parse error, check your template .json file, url: ${path}.json`);
+      log.error(`Sync mock data parse error, check your template .json file, url: ${pageDataPath}.json`);
     }
     pageData = pageData || {};
 
@@ -73,9 +73,9 @@ export default {
     }
 
     try {
-      data = processData(path, data, ctx);
+      data = processData(pageDataPath, data, ctx);
     } catch (err) {
-      log.error(`Sync mock data parse error, check your template .js file, url: ${path}.js`);
+      log.error(`Sync mock data parse error, check your template .js file, url: ${pageDataPath}.js`);
     }
 
     return data || {};
