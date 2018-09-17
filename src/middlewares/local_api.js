@@ -14,9 +14,6 @@ export default function () {
     }
     try {
       let data = await AsyncData.get(ctx);
-      if (isEmptyData(data) && !defaultData) {
-        return next();
-      }
       if (defaultData) {
         data = defaultData;
       }
