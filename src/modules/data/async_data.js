@@ -37,7 +37,7 @@ export default {
       data = await LocalData.get(filePath);
       data = processData(filePath, data, ctx);
     } catch (e) {
-      log.error(`Async Mock data parse error, check your template .json files, url: ${ctx.url}`);
+      log.error(`Async Mock data parse error, check your template .json files, url: ${ctx.url}`, e);
     }
     return data;
   },

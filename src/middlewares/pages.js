@@ -54,9 +54,9 @@ export default function (option = {}) {
     try {
       result = await engine.render(tplPath, json || {});
     } catch (err) {
-      const errorText = '[KS] render error, please check your template files and json files';
+      const errorText = '[KS] render error, please check your template files and json files' + err.toString();
       result.html = errorText;
-      log.error(errorText);
+      log.error(errorText, err);
     }
 
     if (/(^>>>\sABORTED!\s<<<).*/.test(result.output)) {

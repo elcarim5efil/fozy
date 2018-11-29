@@ -38,14 +38,14 @@ export default {
         throw new Error();
       }
     } catch (err) {
-      log.error(`Sync global mock data parse error, check your template .json file, url: ${globalJsonPath}.json`);
+      log.error(`Sync global mock data parse error, check your template .json file, url: ${globalJsonPath}.json`, err);
     }
     globalData = globalData || {};
 
     try {
       globalData = processData(globalJsonPath, globalData, ctx);
     } catch (err) {
-      log.error(`Sync global mock data parse error, check your template .js file, url: ${globalJsonPath}.js`);
+      log.error(`Sync global mock data parse error, check your template .js file, url: ${globalJsonPath}.js`, err);
     }
 
     try {
@@ -54,7 +54,7 @@ export default {
         throw new Error();
       }
     } catch (err) {
-      log.error(`Sync mock data parse error, check your template .json file, url: ${pageDataPath}.json`);
+      log.error(`Sync mock data parse error, check your template .json file, url: ${pageDataPath}.json`, err);
     }
     pageData = pageData || {};
 
@@ -75,7 +75,7 @@ export default {
     try {
       data = processData(pageDataPath, data, ctx);
     } catch (err) {
-      log.error(`Sync mock data parse error, check your template .js file, url: ${pageDataPath}.js`);
+      log.error(`Sync mock data parse error, check your template .js file, url: ${pageDataPath}.js`, err);
     }
 
     return data || {};
