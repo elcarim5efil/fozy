@@ -109,7 +109,7 @@ function readyToRunServer(){
         global.fozy.config = require(fozyConfigPath);
         isReady2RunServer = true;
     } catch(e) {
-        log.error('Fail reading fozy.config.js, please check your file.');
+        log.error('Fail reading fozy.config.js, please check your file.', e);
         return false;
     }
     return true;
