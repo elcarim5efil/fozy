@@ -165,15 +165,4 @@ Freemarker.getFMPPVersion = function getFMPPVersion(cb) {
   fmpp.run(['--version'], cb);
 };
 
-
-// var fm = new Freemarker({
-//   viewRoot: path.join(__dirname, './test')
-// });
-
-// // Single template file
-// fm.render('index.ftl', {a:1000}, function(err, html, output) {
-//   console.log(err, html, output)
-// });
-
 module.exports = Freemarker;
-console.log(Freemarker)
