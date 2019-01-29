@@ -1,8 +1,8 @@
-import KoaRouter from 'koa-router';
-import Html from './html';
+const KoaRouter = require('koa-router');
+const Html = require('./html');
 
 const router = KoaRouter();
 
 router.get('*', new Html().getRouter());
 
-export default router;
+module.exports = router;

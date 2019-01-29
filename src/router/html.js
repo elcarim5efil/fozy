@@ -1,10 +1,10 @@
-import path from 'path';
-import fs from '../promise/fs';
+const path = require('path');
+const fs = require('../promise/fs');
 
 const root = fozy.root;
 const config = fozy.config;
 
-export default class {
+module.exports = class {
   getRouter() {
     return async (ctx, next) => {
       const p = path.join(root, config.htmlView || 'views', `${ctx.url}.html`);

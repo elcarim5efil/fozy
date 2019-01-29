@@ -1,12 +1,12 @@
-import path from 'path';
-import handlebars from 'handlebars';
-import fs from '../promise/fs';
-import isFozy from '../util/is_fozy';
+const path = require('path');
+const handlebars = require('handlebars');
+const fs = require('../promise/fs');
+const isFozy = require('../util/is_fozy');
 
 const root = fozy.root;
 const config = fozy.config;
 
-export default class IndexPage {
+module.exports = class IndexPage {
   constructor() {
     this.pageList = null;
     this.html = null;

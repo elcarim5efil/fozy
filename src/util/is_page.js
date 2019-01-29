@@ -1,4 +1,4 @@
-export default function isPage(ctx) {
+module.exports = function isPage(ctx) {
   let result = false;
   if (String(ctx.method).toLowerCase() !== 'get') {
     return false;

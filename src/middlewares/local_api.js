@@ -1,12 +1,12 @@
-import { AsyncData } from '../modules/data';
-import { isPage, isFozy } from '../util';
+const { AsyncData } = require('../modules/data');
+const { isPage, isFozy } = require('../util');
 
 const config = fozy.config;
 const isEmptyData = function isEmptyData(obj) {
   return Object.keys(obj).length === 0;
 };
 
-export default function () {
+module.exports = function () {
   const defaultData = config.mock.api.defaultData;
   return async (ctx, next) => {
     if (isPage(ctx) || isFozy(ctx.url)) {

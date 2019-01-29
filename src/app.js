@@ -1,11 +1,11 @@
-import Koa from 'koa';
-import convert from 'koa-convert';
-import KoaBodyparser from 'koa-bodyparser';
-import path from 'path';
-import router from './router';
-import { log } from './util';
-import { logger, localApi, proxyApi, pages } from './middlewares';
-import IndexPage from './router/index_page';
+const Koa = require('koa');
+const convert = require('koa-convert');
+const KoaBodyparser = require('koa-bodyparser');
+const path = require('path');
+const router = require('./router');
+const { log } = require('./util');
+const { logger, localApi, proxyApi, pages } = require('./middlewares');
+const IndexPage = require('./router/index_page');
 
 const bodyparser = KoaBodyparser();
 const app = new Koa();

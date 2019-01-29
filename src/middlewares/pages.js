@@ -1,6 +1,6 @@
-import path from 'path';
-import { isPage, extend, log } from '../util';
-import { SyncData } from '../modules/data';
+const path = require('path');
+const { isPage, extend, log } = require('../util');
+const { SyncData } = require('../modules/data');
 
 const root = fozy.root;
 const config = fozy.config;
@@ -20,7 +20,7 @@ const getPathByUrl = function getPathByUrl(url) {
   return res;
 };
 
-export default function (option = {}) {
+module.exports = function (option = {}) {
   let engine;
   option.engine = option.engine || 'ftl';
 
@@ -54,7 +54,7 @@ export default function (option = {}) {
     try {
       result = await engine.render(tplPath, json || {});
     } catch (err) {
-      const errorText = '[KS] render error, please check your template files and json files' + err.toString();
+      const errorText = '<p>[KS] render error, please check your template files and json files</p>' + err.toString();
       result.html = errorText;
       log.error(errorText, err);
     }

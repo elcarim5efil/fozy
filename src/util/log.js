@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+const chalk = require('chalk');
 
 const log = console.log;
 
@@ -26,4 +26,4 @@ const _ = infoTypes.reduce((logger, infoType) => {
   return logger;
 }, {});
 
-export default _;
+module.exports = _;

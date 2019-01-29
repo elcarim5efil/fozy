@@ -1,10 +1,10 @@
 require('babel-polyfill');
 
-const app = require('./lib/app');
+const app = require('./src/app');
 const path = require('path');
 
 const configPath = path.join(fozy.root, 'fozy.config');
-const log = require('./lib/util/log').default;
+const log = require('./src/util/log');
 
 /* eslint-disable */
 const config = require(configPath);

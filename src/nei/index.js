@@ -1,10 +1,10 @@
 require('babel-polyfill');
 
-import path from 'path';
-import loader from './loader';
-import output from './output';
-import config from './config';
-import { log } from '../util';
+const path = require('path');
+const loader = require('./loader');
+const output = require('./output');
+const config = require('./config');
+const { log } = require('../util');
 
 const root = fozy.root;
 

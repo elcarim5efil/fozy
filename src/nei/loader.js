@@ -1,4 +1,4 @@
-import { log } from '../util';
+const { log } = require('../util');
 
 const req = require('../../lib/promise/req');
 

@@ -1,4 +1,4 @@
-import Freemarker from 'freemarker.js';
+const Freemarker = require('./freemarker/index.js');
 
 module.exports = (option) => {
   const fm = new Freemarker(option);

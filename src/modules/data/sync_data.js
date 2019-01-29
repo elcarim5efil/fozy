@@ -1,7 +1,7 @@
-import _path from 'path';
-import qs from 'querystring';
-import { log, JSONProcessor } from '../../util';
-import LocalData from './local_data';
+const _path = require('path');
+const qs = require('querystring');
+const { log, JSONProcessor } = require('../../util');
+const LocalData = require('./local_data');
 
 const root = fozy.root;
 const config = fozy.config;
@@ -22,7 +22,7 @@ function processData(path, data, ctx) {
   );
 }
 
-export default {
+module.exports = {
   async get(option) {
     const ctx = option.ctx || {};
     const path = option.path || '';

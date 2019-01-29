@@ -1,6 +1,6 @@
-import { log } from '../util';
+const { log } = require('../util');
 
-export default function () {
+module.exports = function () {
   return async (ctx, next) => {
     const start = new Date();
     await next();

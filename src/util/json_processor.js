@@ -1,5 +1,5 @@
-import requireNew from './require_from_new';
-import fs from '../promise/fs';
+const requireNew = require('./require_from_new');
+const fs = require('../promise/fs');
 
 class JSONProcessor {
   constructor(option) {
@@ -46,4 +46,4 @@ class JSONProcessor {
   }
 }
 
-export default JSONProcessor;
+module.exports = JSONProcessor;

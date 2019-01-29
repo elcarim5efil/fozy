@@ -4,8 +4,8 @@
 process.env.NODE_ENV = 'production';
 
 const path = require('path');
-const Cli = require('../lib/cli');
-const log = require('../lib/util').log;
+const Cli = require('../src/cli');
+const log = require('../src/util').log;
 const fs = require('fs');
 let cli = new Cli();
 let isReady2RunServer;
@@ -63,13 +63,13 @@ function runInProxyMode(arg){
 }
 
 function initFozyConfigJSFile(){
-    var init = require('../lib/init');
+    var init = require('../src/init');
     isReady2RunServer = false;
     init.run();
 }
 
 function runNeiSetup(arg){
-    let nei = require('../lib/nei');
+    let nei = require('../src/nei');
     isReady2RunServer = false;
     nei.build(arg);
 }

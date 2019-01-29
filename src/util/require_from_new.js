@@ -1,6 +1,6 @@
-import path from 'path';
+const path = require('path');
 
-export default function requireWithNoCache(file) {
+module.exports = function requireWithNoCache(file) {
   delete require.cache[path.resolve(file)];
   /*eslint-disable*/
   return require(file);

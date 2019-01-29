@@ -1,8 +1,8 @@
-import https from 'https';
-import proxy from '../modules/proxy';
-import { isPage, isFozy } from '../util';
+const https = require('https');
+const proxy = require('../modules/proxy');
+const { isPage, isFozy } = require('../util');
 
-export default function () {
+module.exports = function () {
   const config = fozy.config.mock.proxy;
   const headers = {
     'accept-encoding': 'gzip;q=0,deflate,sdch,br',

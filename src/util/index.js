@@ -1,11 +1,11 @@
-import extend from './extend';
-import JSONProcessor from './json_processor';
-import log from './log';
-import requireFromNew from './require_from_new';
-import isPage from './is_page';
-import isFozy from './is_fozy';
+const extend = require('./extend');
+const JSONProcessor = require('./json_processor');
+const log = require('./log');
+const requireFromNew = require('./require_from_new');
+const isPage = require('./is_page');
+const isFozy = require('./is_fozy');
 
-export {
+module.exports = {
   extend,
   JSONProcessor,
   log,

@@ -1,9 +1,9 @@
-import logger from './logger';
-import localApi from './local_api';
-import proxyApi from './proxy_api';
-import pages from './pages';
+const logger = require('./logger');
+const localApi = require('./local_api');
+const proxyApi = require('./proxy_api');
+const pages = require('./pages');
 
-export {
+module.exports = {
   logger,
   localApi,
   proxyApi,

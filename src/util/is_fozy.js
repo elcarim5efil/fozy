@@ -1,3 +1,3 @@
-export default function isFozy(str) {
+module.exports = function isFozy(str) {
   return /fozy/g.test(str);
 }

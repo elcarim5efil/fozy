@@ -91,6 +91,7 @@ Freemarker.prototype.render = function(tpl, data, done) {
     }
     var args = [tplFile, '-C', cfgFile];
     fmpp.run(args, function getFMPPResult(err, respData) {
+      console.log(err, respData)
       if(err) {
         return done(err,null,respData);
       }
@@ -165,13 +166,14 @@ Freemarker.getFMPPVersion = function getFMPPVersion(cb) {
 };
 
 
-var fm = new Freemarker({
-  viewRoot: path.join(__dirname, './test')
-});
+// var fm = new Freemarker({
+//   viewRoot: path.join(__dirname, './test')
+// });
 
-// Single template file
-fm.render('index.ftl', {a:1000}, function(err, html, output) {
-  console.log(err, html, output)
-});
+// // Single template file
+// fm.render('index.ftl', {a:1000}, function(err, html, output) {
+//   console.log(err, html, output)
+// });
 
 module.exports = Freemarker;
+console.log(Freemarker)

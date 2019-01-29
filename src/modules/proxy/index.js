@@ -1,5 +1,5 @@
-import Proxy from 'http-proxy';
-import { log } from '../../util';
+const Proxy = require('http-proxy');
+const { log } = require('../../util');
 
 const proxyConf = fozy.config.mock.proxy;
 

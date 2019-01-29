@@ -1,8 +1,8 @@
-import LocalData from './local_data';
-import AsyncData from './async_data';
-import SyncData from './sync_data';
+const LocalData = require('./local_data');
+const AsyncData = require('./async_data');
+const SyncData = require('./sync_data');
 
-export {
+module.exports = {
   LocalData,
   AsyncData,
   SyncData,

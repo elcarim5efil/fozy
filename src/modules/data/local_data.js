@@ -1,9 +1,9 @@
-import json5 from 'json5';
-import _ from '../../util/extend';
-import fs from '../../promise/fs';
-import { log } from '../../util';
+const json5 = require('json5');
+const _ = require('../../util/extend');
+const fs = require('../../promise/fs');
+const { log } = require('../../util');
 
-export default {
+module.exports = {
   async get(path, opt = {}) {
     if (!opt.postfixs) {
       opt.postfixs = [

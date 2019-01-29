@@ -1,5 +1,4 @@
-import StreamInjecter from 'stream-injecter';
-
+const StreamInjecter require('stream-injecter');
 const browserSync = require('browser-sync').create();
 
 let bs = null;

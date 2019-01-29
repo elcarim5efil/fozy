@@ -1,5 +1,5 @@
-import path from 'path';
-import koaBrowserSync from './browser.sync';
+const path = require('path');
+const koaBrowserSync = require('./browser.sync');
 
 const root = fozy.root;
 const config = fozy.config;
