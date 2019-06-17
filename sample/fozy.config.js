@@ -1,3 +1,6 @@
+const xFrameOptions = require('./x-frame-options');
+const cors = require('koa2-cors');
+
 var config = {
     port: 3000,
     maxRetry: 10,
@@ -37,8 +40,9 @@ var config = {
         {name: '示例2', url: '/demo2', path: './pages/demo2.ftl'},
         {name: '示例3', url: '/demo3', path: './pages/demo3.html'},
     ],
-    plugins: [
-        'fozy-mcss'
+    middlewares: [
+        xFrameOptions,
+        () => cors({ origin: () => '*' })
     ]
 
 };

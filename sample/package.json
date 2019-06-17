@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "koa2-cors": "^2.0.6",
     "koa2-http-proxy": "^0.0.3",
     "request": "^2.75.0"
   }
