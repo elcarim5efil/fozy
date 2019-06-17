@@ -1,4 +1,5 @@
-const Freemarker = require('./freemarker/index.js');
+const Freemarker = require('freemarker.js');
+// const Freemarker = require('./freemarker/index.js');
 
 module.exports = (option) => {
   const fm = new Freemarker(option);
