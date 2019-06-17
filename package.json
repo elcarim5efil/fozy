@@ -1,6 +1,6 @@
 {
   "name": "fozy",
-  "version": "0.8.0-0",
+  "version": "0.8.0-0-beta",
   "description": "",
   "main": "index.js",
   "bin": {
