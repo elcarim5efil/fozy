@@ -1,4 +1,5 @@
 import Koa from 'koa';
+import cors from 'koa2-cors';
 import convert from 'koa-convert';
 import KoaBodyparser from 'koa-bodyparser';
 import path from 'path';
@@ -29,6 +30,9 @@ config.resource.forEach((item) => {
 app.use(logger());
 
 app.use(new IndexPage().getRouter());
+
+// 支持跨域
+app.use(cors({ origin: () => '*', }));
 
 if (proxyConf) {
   log.info(`Using proxy api: ${proxyConf.target}`);
