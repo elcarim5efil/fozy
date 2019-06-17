@@ -1,5 +1,4 @@
 const Koa = require('koa');
-const cors = require('koa2-cors');
 const convert = require('koa-convert');
 const KoaBodyparser = require('koa-bodyparser');
 const path = require('path');
@@ -13,6 +12,12 @@ const app = new Koa();
 const root = fozy.root;
 const config = fozy.config;
 const proxyConf = config.mock.proxy;
+
+if (fozy.config.middlewares) {
+  fozy.config.middlewares.forEach((middleware) => {
+    app.use(middleware(fozy));
+  });
+}
 
 // setup live reload
 if (global.fozy.dev.watch) {
@@ -30,9 +35,6 @@ config.resource.forEach((item) => {
 app.use(logger());
 
 app.use(new IndexPage().getRouter());
-
-// 支持跨域
-app.use(cors({ origin: () => '*', }));
 
 if (proxyConf) {
   log.info(`Using proxy api: ${proxyConf.target}`);
