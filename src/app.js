@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const cors = require('koa2-cors');
 const convert = require('koa-convert');
 const KoaBodyparser = require('koa-bodyparser');
 const path = require('path');
@@ -29,6 +30,9 @@ config.resource.forEach((item) => {
 app.use(logger());
 
 app.use(new IndexPage().getRouter());
+
+// 支持跨域
+app.use(cors({ origin: () => '*', }));
 
 if (proxyConf) {
   log.info(`Using proxy api: ${proxyConf.target}`);
