@@ -1,5 +1,3 @@
-require('babel-polyfill');
-
 const app = require('./src/app');
 const path = require('path');
 
