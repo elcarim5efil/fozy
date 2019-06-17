@@ -66,7 +66,7 @@ var config = {
                               // or you can just assign it to false, then the file name will be deault according to the url
                               // etc: url =>GET /test/getData, the mock data file name will be getData.json
                               // and the whole path will be ./mock/api/get/test/getData.json
-  },     
+  },
   template: {  // template
     engine: 'ftl',  // template engine
     root: './templates',  // template file
@@ -172,7 +172,7 @@ In this way, the server will stringify the specific mock data defined in `__json
 
 # cli
 
-```
+```bash
 -v, --version, print version
 -h, --help, print help
 -w, --watch, start live-reload with browser-sync
