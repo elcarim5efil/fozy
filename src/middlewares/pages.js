@@ -33,6 +33,10 @@ module.exports = function (option = {}) {
     });
   }
 
+  if (option.engine === 'custom') {
+    engine = option.getEngine();
+  }
+
   function isTplFileExist(tplPath) {
     return tplPath !== -1 && extend.isFileExist(path.join(templateRoot, tplPath));
   }
