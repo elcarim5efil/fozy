@@ -47,7 +47,7 @@ if (proxyConf) {
 
 app.use(router.routes(), router.allowedMethods());
 
-app.use(pages());
+app.use(pages(config.template));
 
 app.on('error', (err, ctx) => {
   log.error('Server error', err, ctx);
